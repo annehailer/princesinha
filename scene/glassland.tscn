@@ -100,7 +100,7 @@ next_level = "forest"
 position = Vector2(152, 192)
 
 [node name="skeleton3" parent="." unique_id=634628071 instance=ExtResource("11_ggks1")]
-position = Vector2(83, 192)
+position = Vector2(761, 192)
 
 [node name="skeleton2" parent="." unique_id=1193707866 instance=ExtResource("11_ggks1")]
-position = Vector2(301, 160)
+position = Vector2(447, 161)
