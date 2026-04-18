@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dinqlwm5i6b66"]
 
 [ext_resource type="Script" uid="uid://cmu4t2a4ru2b4" path="res://scripts/player.gd" id="1_merdl"]
-[ext_resource type="PackedScene" uid="uid://c2cueqjl5qdo1" path="res://scene/bullet.tscn" id="2_qsoyl"]
+[ext_resource type="PackedScene" uid="uid://c2cueqjl5qdo1" path="res://entities/bullet.tscn" id="2_qsoyl"]
 [ext_resource type="Texture2D" uid="uid://dsmk0ycii38rw" path="res://sprites/Princess Sera/Jumping_&_Falling_(Dressed) (16 x 32).png" id="2_rfe5m"]
 [ext_resource type="Texture2D" uid="uid://b88e8fyihggup" path="res://sprites/Princess Sera/Hurt (16 x 32).png" id="3_6nm46"]
 [ext_resource type="Texture2D" uid="uid://dwcrh4lxpyjo8" path="res://sprites/Princess Sera/Idle_(Dressed) (16 x 32).png" id="3_qly61"]
@@ -141,7 +141,7 @@ texture_filter = 1
 position = Vector2(0.39999962, -4.129446)
 scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_qly61")
-animation = &"walk"
+animation = &"run_shoot"
 autoplay = "idle"
 speed_scale = 0.3
 
@@ -154,7 +154,7 @@ shape = SubResource("CapsuleShape2D_rfe5m")
 
 [node name="hitbox" type="Area2D" parent="." unique_id=154391381]
 collision_layer = 2
-collision_mask = 4
+collision_mask = 20
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=1668980295]
 position = Vector2(0.24409808, 1.2200956)
@@ -163,7 +163,13 @@ shape = SubResource("RectangleShape2D_qsoyl")
 debug_color = Color(0.838776, 0.1164641, 0.17806125, 0.41960785)
 
 [node name="ReloadTimer" type="Timer" parent="." unique_id=1488829164]
+wait_time = 0.4
 one_shot = true
+
+[node name="BulletStartPosition" type="Marker2D" parent="." unique_id=564652362]
+unique_name_in_owner = true
+z_index = 4096
+position = Vector2(0.93491554, 9.566891)
 
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]

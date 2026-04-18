@@ -4,6 +4,8 @@ var speed: float = 120
 var damage: float = 10
 var moving_right: bool = true
 
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	var direction: int

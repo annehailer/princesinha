@@ -11,6 +11,10 @@ enum PlayerState {
 
 @onready var reload_timer: Timer = $ReloadTimer
 
+const BULLET = preload("uid://c2cueqjl5qdo1")
+@onready var bullet_start_position: Node2D = %BulletStartPosition
+
+
 
 const MAX_SPEED = 23
 var friction: float = 4
@@ -80,7 +84,7 @@ func go_to_jump_state():
 func go_to_dead_state():
 	status = PlayerState.dead
 	sprite.play("dead")
-	velocity = Vector2.ZERO
+	velocity.x = 0
 	reload_timer.start()
 
 
@@ -125,13 +129,11 @@ func shoot_behavior():
 
 
 func do_shooting():
-	var bullet_instance = bullet_scene.instantiate()
+	var bullet_instance = BULLET.instantiate()
 	var player_bullet: PlayerBullet = bullet_instance
 	if sprite.flip_h: player_bullet.moving_right = false
-	bullet_instance.global_position = self.global_position
-	print("shoot")
-	
-	get_tree().current_scene.add_child(bullet_instance)
+	bullet_instance.position = bullet_start_position.global_position
+	add_sibling(bullet_instance)
 
 
 func die():
@@ -144,6 +146,14 @@ func check_if_fall():
 
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("Enemies"):
+		hit_enemy(area)
+	elif area.is_in_group("LethalArea"):
+		hit_lethal_area()
+
+
+
+func hit_enemy(area: Area2D):
 	if velocity.y > 0:
 		# inimigo morre
 		area.get_parent().take_damage()
@@ -153,6 +163,10 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		# player morre
 		if status != PlayerState.dead:
 			go_to_dead_state()
+
+func hit_lethal_area():
+	go_to_dead_state()
+
 
 
 func _on_reload_timer_timeout() -> void:

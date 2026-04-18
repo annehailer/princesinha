@@ -160,7 +160,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yag7t"]
 size = Vector2(19.402985, 20.300753)
 
-[node name="skeleton" type="CharacterBody2D" unique_id=370362738]
+[node name="skeleton" type="CharacterBody2D" unique_id=370362738 groups=["Enemies"]]
 collision_layer = 4
 script = ExtResource("1_yag7t")
 
@@ -177,8 +177,7 @@ animation = &"attack"
 frame = 2
 frame_progress = 0.2772527
 
-[node name="hitbox" type="Area2D" parent="." unique_id=1640965968]
-visible = false
+[node name="hitbox" type="Area2D" parent="." unique_id=1640965968 groups=["Enemies"]]
 collision_layer = 4
 collision_mask = 2
 
@@ -198,7 +197,7 @@ target_position = Vector2(0, 21)
 
 [node name="PlayerDetector" type="RayCast2D" parent="." unique_id=112894680]
 position = Vector2(-1, 13)
-target_position = Vector2(58, 0)
+target_position = Vector2(98, 0)
 collision_mask = 2
 
 [node name="BoneStartPosition" type="Node2D" parent="." unique_id=9880445]
