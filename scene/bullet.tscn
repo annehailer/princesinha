@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://c2cueqjl5qdo1"]
+
+[ext_resource type="Texture2D" uid="uid://bdpulfycu5g6g" path="res://sprites/Princess Sera/Projectile_Bubble (8 x 8).png" id="1_qwydi"]
+[ext_resource type="Script" uid="uid://xoif37gxhuxh" path="res://scripts/bullet.gd" id="1_xw300"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwydi"]
+atlas = ExtResource("1_qwydi")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xw300"]
+atlas = ExtResource("1_qwydi")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m2l4i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwydi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xw300")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xw300"]
+radius = 8.0
+
+[node name="bullet" type="CharacterBody2D" unique_id=840761218]
+scale = Vector2(0.7, 0.7)
+script = ExtResource("1_xw300")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1595379177]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_m2l4i")
+autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1127883981]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2091168521]
+shape = SubResource("CircleShape2D_xw300")
