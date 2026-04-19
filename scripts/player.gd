@@ -149,8 +149,8 @@ func check_if_fall():
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Enemies"):
 		hit_enemy(area)
-	elif area.is_in_group("LethalArea"):
-		hit_lethal_area()
+	elif area.is_in_group("EnemyBullet"):
+		hit_enemy_bullet()
 
 
 
@@ -165,7 +165,7 @@ func hit_enemy(area: Area2D):
 		if status != PlayerState.dead:
 			go_to_dead_state()
 
-func hit_lethal_area():
+func hit_enemy_bullet():
 	go_to_dead_state()
 
 
