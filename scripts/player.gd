@@ -86,6 +86,7 @@ func go_to_dead_state():
 	sprite.play("dead")
 	velocity.x = 0
 	reload_timer.start()
+	do_blink()
 
 
 func idle_state(delta):
@@ -168,6 +169,32 @@ func hit_lethal_area():
 	go_to_dead_state()
 
 
-
 func _on_reload_timer_timeout() -> void:
 	get_tree().reload_current_scene()
+	
+
+												  # BLINK SHADER
+
+var blink_duration: float = 0.8
+var blink_tween: Tween
+
+
+func do_blink():
+	if blink_tween and blink_tween.is_running():
+		blink_tween.kill()
+	
+	_set_flash(1.0)
+	
+	blink_tween = create_tween()
+	
+	blink_tween.tween_method(
+		_set_flash,
+		1.0,
+		0.0,
+		blink_duration
+	).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+
+func _set_flash(value: float):
+	sprite.material.set_shader_parameter("flash_pct", value)
+
+############################################################################

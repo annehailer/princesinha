@@ -66,7 +66,10 @@ func go_to_dead_state():
 
 func walk_state(_delta):
 	if status == SkeletonState.dead: return
-	velocity.x = SPEED * direction
+	if sprite.frame == 3 or sprite.frame == 4:
+		velocity.x = SPEED * direction
+	else:
+		velocity.x = 0
 	
 	
 	if wall_detector.is_colliding():
@@ -101,6 +104,8 @@ func throw_bone():
 	new_bone.position = bone_start_position.global_position
 	new_bone.set_direction(self.direction)
 
+													# BLINK SHADER
+
 var blink_duration: float = 0.8
 var blink_tween: Tween
 
@@ -122,6 +127,8 @@ func do_blink():
 
 func _set_flash(value: float):
 	sprite.material.set_shader_parameter("flash_pct", value)
+
+#############################################################################
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:

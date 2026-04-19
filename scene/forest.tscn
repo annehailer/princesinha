@@ -94,17 +94,21 @@ position = Vector2(79, 133)
 limit_top = 0
 limit_right = 1325
 
-[node name="StartLimit" type="RigidBody2D" parent="." unique_id=233307346]
+[node name="StartLimit" type="StaticBody2D" parent="." unique_id=749227457]
+position = Vector2(-14, 114)
+collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StartLimit" unique_id=969528957]
-position = Vector2(-41, 111)
+position = Vector2(4, -9)
 shape = SubResource("RectangleShape2D_jo4av")
 debug_color = Color(0.8801642, 0.33440673, 0.14642599, 0.41960785)
 
-[node name="EndLimit" type="RigidBody2D" parent="." unique_id=484451346]
+[node name="EndLimit" type="StaticBody2D" parent="." unique_id=1893187395]
+position = Vector2(1339, 123)
+collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EndLimit" unique_id=1417585701]
-position = Vector2(1378, 104)
+position = Vector2(-4, -17)
 shape = SubResource("RectangleShape2D_jo4av")
 debug_color = Color(0.8324629, 0.38432544, 0.20528457, 0.41960785)
 
@@ -115,5 +119,5 @@ tile_map_data = PackedByteArray("AAABAAwAAQAEAAEAAAADAAwAAQAEAAEAAAAAAAwAAQAEAAE
 tile_set = ExtResource("2_gbfvw")
 
 [node name="LevelEnd" parent="." unique_id=1398727547 instance=ExtResource("10_jxvlp")]
-position = Vector2(1204, 223)
+position = Vector2(1199, 207)
 next_level = "tropic"

@@ -74,18 +74,22 @@ texture = ExtResource("8_x4qui")
 centered = false
 
 [node name="Camera" parent="." unique_id=1234135878 instance=ExtResource("9_m16c4")]
-position = Vector2(71, 101)
+position = Vector2(66, 190)
 limit_right = 2090
 limit_bottom = 230
 
-[node name="StartLimit" type="RigidBody2D" parent="." unique_id=1866181312]
+[node name="StartLimit" type="StaticBody2D" parent="." unique_id=1506720989]
+position = Vector2(95, -6)
+collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StartLimit" unique_id=1825257775]
 position = Vector2(-105, 119)
 shape = SubResource("RectangleShape2D_17rxn")
 debug_color = Color(0.88800055, 0.32297146, 0.16633388, 0.41960785)
 
-[node name="EndLimit" type="RigidBody2D" parent="." unique_id=1985549953]
+[node name="EndLimit" type="StaticBody2D" parent="." unique_id=811372408]
+position = Vector2(-62, 3)
+collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EndLimit" unique_id=2008627422]
 position = Vector2(2181, 140)

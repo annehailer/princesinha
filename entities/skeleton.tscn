@@ -161,6 +161,8 @@ animations = [{
 size = Vector2(19.402985, 20.300753)
 
 [node name="skeleton" type="CharacterBody2D" unique_id=370362738 groups=["Enemies"]]
+position = Vector2(0, 0.1)
+scale = Vector2(1.1, 1.1)
 collision_layer = 4
 script = ExtResource("1_yag7t")
 
@@ -200,7 +202,7 @@ position = Vector2(-1, 13)
 target_position = Vector2(98, 0)
 collision_mask = 2
 
-[node name="BoneStartPosition" type="Node2D" parent="." unique_id=9880445]
-position = Vector2(13, 4)
+[node name="BoneStartPosition" type="Marker2D" parent="." unique_id=1354078400]
+position = Vector2(12.727272, 8.090909)
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
