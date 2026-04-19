@@ -38,7 +38,6 @@ script = ExtResource("1_opdhh")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1595379177]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_m2l4i")
-autoplay = "default"
 
 [node name="SelfDestructTimer" type="Timer" parent="." unique_id=1385052630]
 wait_time = 10.0

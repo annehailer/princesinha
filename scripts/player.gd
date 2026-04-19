@@ -11,14 +11,14 @@ enum PlayerState {
 
 @onready var reload_timer: Timer = $ReloadTimer
 
-const BULLET = preload("uid://c2cueqjl5qdo1")
-@onready var bullet_start_position: Node2D = %BulletStartPosition
-
 
 
 const MAX_SPEED = 23
 var friction: float = 4
 var acceleration: float = 50
+var start_jump_timer: bool = false
+var set_jump_timer: float = 0
+var set_jump_cooldown: float = 0.15
 
 const JUMP_VELOCITY = 350.0
 
@@ -45,6 +45,9 @@ func _ready() -> void:
 	spawn_pos = global_position
 	go_to_idle_state()
 
+func _process(delta: float) -> void:
+	if bullet_timer > 0:
+		bullet_timer -= delta
 
 func _physics_process(delta: float) -> void:
 	shoot_behavior()
@@ -62,7 +65,6 @@ func _physics_process(delta: float) -> void:
 			jump_State(delta)
 		PlayerState.dead:
 			dead_state(delta)
-			
 	move_and_slide()
 
 
@@ -79,7 +81,7 @@ func go_to_walk_state():
 func go_to_jump_state():
 	status = PlayerState.jump
 	sprite.play("jump")
-	velocity.y = -JUMP_VELOCITY
+
 
 func go_to_dead_state():
 	status = PlayerState.dead
@@ -94,10 +96,11 @@ func idle_state(delta):
 	if velocity.x != 0:
 		go_to_walk_state()
 		return
-		
 	if Input.is_action_just_pressed("jump"):
+		apply_jump_force()
 		go_to_jump_state()
 		return
+	set_jump_redo(delta)
 
 func walk_state(delta):
 	move(delta)
@@ -105,11 +108,15 @@ func walk_state(delta):
 		go_to_idle_state()
 		return
 	if Input.is_action_just_pressed("jump"):
+		apply_jump_force()
 		go_to_jump_state()
 		return
+	set_jump_redo(delta)
+
 
 func dead_state(_delta):
 	pass
+
 
 func jump_State(delta):
 	move(delta)
@@ -118,18 +125,30 @@ func jump_State(delta):
 			go_to_idle_state()
 		else:
 			go_to_walk_state()
+		start_jump_timer = false
+		set_jump_timer = set_jump_cooldown
 		return
 
+func apply_jump_force():
+	velocity.y = -JUMP_VELOCITY
 
+#------------------------------ SHOOTING ------------------
 
-@export var bullet_scene: PackedScene
+const BULLET = preload("uid://c2cueqjl5qdo1")
+@onready var bullet_start_position: Node2D = %BulletStartPosition
+
+var bullet_cooldown: float = 0.5
+var bullet_timer: float = 0 
 
 func shoot_behavior():
+	if bullet_timer > 0: return
 	if Input.is_action_just_pressed("shoot"):
 		do_shooting()
 
 
 func do_shooting():
+	bullet_timer = bullet_cooldown
+	
 	var bullet_instance = BULLET.instantiate()
 	var player_bullet: PlayerBullet = bullet_instance
 	if sprite.flip_h: player_bullet.moving_right = false
@@ -159,7 +178,8 @@ func hit_enemy(area: Area2D):
 		# inimigo morre
 		area.get_parent().take_damage()
 		ScreenShake.do_screen_shake(3.5, 0.5)
-		go_to_jump_state()
+		#go_to_jump_state()
+		apply_jump_force()
 	else:
 		# player morre
 		if status != PlayerState.dead:
@@ -173,7 +193,7 @@ func _on_reload_timer_timeout() -> void:
 	get_tree().reload_current_scene()
 	
 
-												  # BLINK SHADER
+#--------------------------------------- BLINK ANIMATION --------------------------
 
 var blink_duration: float = 0.8
 var blink_tween: Tween
@@ -198,3 +218,17 @@ func _set_flash(value: float):
 	sprite.material.set_shader_parameter("flash_pct", value)
 
 ############################################################################
+
+func set_jump_redo(delta: float):
+	if status != PlayerState.jump:
+		if !is_on_floor() && start_jump_timer == false:
+			set_jump_timer = set_jump_cooldown
+			start_jump_timer = true
+	if start_jump_timer:
+		if set_jump_timer > 0:
+			set_jump_timer -= delta
+		if set_jump_timer <= 0:
+			if status == PlayerState.jump: return 
+			print("vai pro jump state")
+			go_to_jump_state()
+			start_jump_timer = false

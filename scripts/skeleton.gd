@@ -29,9 +29,12 @@ func _ready() -> void:
 	sprite.material = sprite.material.duplicate()
 	go_to_walk_state()
 
+func _process(delta: float) -> void:
+	if bone_timer > 0:
+		bone_timer -= delta
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
+	# Add the gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
@@ -81,6 +84,7 @@ func walk_state(_delta):
 		direction *= -1
 		
 	if player_detector.is_colliding():
+		if bone_timer > 0: return
 		go_to_attack_state()
 		return
 
@@ -98,13 +102,18 @@ func take_damage():
 	do_blink()
 	go_to_dead_state()
 
+var bone_cooldown: float = 3.0
+var bone_timer: float = 0
+
 func throw_bone():
+	bone_timer = bone_cooldown
 	var new_bone = SPINNING_BONE.instantiate()
 	add_sibling(new_bone)
 	new_bone.position = bone_start_position.global_position
 	new_bone.set_direction(self.direction)
+	go_to_walk_state()
 
-													# BLINK SHADER
+#--------------------------------------- BLINK ANIMATION --------------------------
 
 var blink_duration: float = 0.8
 var blink_tween: Tween
