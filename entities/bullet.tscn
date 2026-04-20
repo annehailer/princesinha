@@ -29,13 +29,14 @@ animations = [{
 radius = 8.0
 
 [node name="bullet" type="Area2D" unique_id=2051691701 groups=["PlayerBullet"]]
-z_index = 100
 scale = Vector2(0.525, 0.525)
 collision_layer = 16
 collision_mask = 21
 script = ExtResource("1_opdhh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1595379177]
+z_index = 100
+z_as_relative = false
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_m2l4i")
 

@@ -161,7 +161,6 @@ animations = [{
 size = Vector2(19.402985, 20.300753)
 
 [node name="skeleton" type="CharacterBody2D" unique_id=370362738 groups=["Enemies"]]
-position = Vector2(0, 0.1)
 scale = Vector2(1.1, 1.1)
 collision_layer = 4
 script = ExtResource("1_yag7t")
@@ -173,11 +172,14 @@ scale = Vector2(0.885, 0.885)
 shape = SubResource("CapsuleShape2D_yag7t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=859350989]
+z_index = 50
+z_as_relative = false
 material = SubResource("ShaderMaterial_j31jw")
 sprite_frames = SubResource("SpriteFrames_fpmxe")
 animation = &"attack"
 frame = 2
 frame_progress = 0.2772527
+offset = Vector2(0, 1)
 
 [node name="hitbox" type="Area2D" parent="." unique_id=1640965968 groups=["Enemies"]]
 collision_layer = 4

@@ -102,7 +102,7 @@ func take_damage():
 	do_blink()
 	go_to_dead_state()
 
-var bone_cooldown: float = 3.0
+var bone_cooldown: float = 2.0
 var bone_timer: float = 0
 
 func throw_bone():
