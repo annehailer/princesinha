@@ -20,7 +20,7 @@ position = Vector2(0, -13)
 metadata/_edit_vertical_guides_ = [2110.0]
 
 [node name="player" parent="." unique_id=625220098 instance=ExtResource("1_fnylv")]
-position = Vector2(53, 190)
+position = Vector2(42, 194)
 
 [node name="Tiles" type="Node2D" parent="." unique_id=34924048]
 
@@ -100,11 +100,64 @@ debug_color = Color(0.88548213, 0.32215047, 0.2189183, 0.41960785)
 position = Vector2(1983, 235)
 next_level = "forest"
 
-[node name="skeleton" parent="." unique_id=370362738 instance=ExtResource("11_ggks1")]
-position = Vector2(152, 192)
+[node name="enemys" type="Node2D" parent="." unique_id=1637570110]
 
-[node name="skeleton3" parent="." unique_id=634628071 instance=ExtResource("11_ggks1")]
-position = Vector2(761, 192)
+[node name="skeleton" parent="enemys" unique_id=370362738 instance=ExtResource("11_ggks1")]
+position = Vector2(286, 157.99998)
+rotation = 3.1415927
+scale = Vector2(1.1, -1.1)
 
-[node name="skeleton2" parent="." unique_id=1193707866 instance=ExtResource("11_ggks1")]
-position = Vector2(447, 161)
+[node name="skeleton2" parent="enemys" unique_id=1284785071 instance=ExtResource("11_ggks1")]
+position = Vector2(367, 158)
+rotation = 3.1415927
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton3" parent="enemys" unique_id=1909694443 instance=ExtResource("11_ggks1")]
+position = Vector2(437, 157.99998)
+rotation = 3.1415927
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton4" parent="enemys" unique_id=1574653380 instance=ExtResource("11_ggks1")]
+position = Vector2(501, 158)
+rotation = 3.1415927
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton5" parent="enemys" unique_id=1898362168 instance=ExtResource("11_ggks1")]
+position = Vector2(579, 156.99998)
+rotation = 3.1415927
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton6" parent="enemys" unique_id=1068725089 instance=ExtResource("11_ggks1")]
+position = Vector2(635, 156.99998)
+rotation = 3.1415927
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton7" parent="enemys" unique_id=689089682 instance=ExtResource("11_ggks1")]
+position = Vector2(488, 78)
+rotation = 3.1415927
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton8" parent="enemys" unique_id=330821020 instance=ExtResource("11_ggks1")]
+position = Vector2(381, 77)
+rotation = 3.1415927
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton9" parent="enemys" unique_id=1189890635 instance=ExtResource("11_ggks1")]
+position = Vector2(72, 125)
+rotation = 3.1415927
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton10" parent="enemys" unique_id=2104279911 instance=ExtResource("11_ggks1")]
+position = Vector2(47, 71)
+rotation = 3.1415927
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton11" parent="enemys" unique_id=112240764 instance=ExtResource("11_ggks1")]
+position = Vector2(73, 7.0000076)
+rotation = 3.1415927
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton12" parent="enemys" unique_id=1413740721 instance=ExtResource("11_ggks1")]
+position = Vector2(44, -58.000004)
+rotation = 3.1415927
+scale = Vector2(1.1, -1.1)

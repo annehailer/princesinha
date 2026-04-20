@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://b0b75a6cduesk" path="res://sprites/3 - Skeleton/Limping_Movement (32 x 32).png" id="4_j31jw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yag7t"]
+radius = 1.0272217
+height = 16.435541
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j31jw"]
 shader = ExtResource("2_6hr2a")
@@ -98,6 +100,12 @@ animations = [{
 "texture": SubResource("AtlasTexture_lem8q")
 }, {
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_lem8q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lem8q")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_dp68x")
 }, {
 "duration": 1.0,
@@ -157,17 +165,24 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yag7t"]
-size = Vector2(19.402985, 20.300753)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6hr2a"]
+radius = 8.88585
+height = 19.138754
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6hr2a"]
+radius = 6.363636
 
 [node name="skeleton" type="CharacterBody2D" unique_id=370362738 groups=["Enemies"]]
-scale = Vector2(1.1, 1.1)
+position = Vector2(1, 0)
+scale = Vector2(-1.1, 1.1)
 collision_layer = 4
 script = ExtResource("1_yag7t")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1976760910]
+[node name="Feet" type="CollisionShape2D" parent="." unique_id=1976760910]
 visible = false
-position = Vector2(2, 3)
+z_index = 4000
+position = Vector2(0.9090909, 16.363636)
+rotation = 1.5707964
 scale = Vector2(0.885, 0.885)
 shape = SubResource("CapsuleShape2D_yag7t")
 
@@ -177,19 +192,32 @@ z_as_relative = false
 material = SubResource("ShaderMaterial_j31jw")
 sprite_frames = SubResource("SpriteFrames_fpmxe")
 animation = &"attack"
-frame = 2
-frame_progress = 0.2772527
-offset = Vector2(0, 1)
+frame = 6
+frame_progress = 1.0
+offset = Vector2(0, 1.255)
 
-[node name="hitbox" type="Area2D" parent="." unique_id=1640965968 groups=["Enemies"]]
+[node name="body_hitbox" type="Area2D" parent="." unique_id=1640965968 groups=["SkeletonBody"]]
+unique_name_in_owner = true
+visible = false
+collision_layer = 4
+collision_mask = 18
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="body_hitbox" unique_id=735637850]
+z_index = 4000
+position = Vector2(2.7272725, 4.5454545)
+scale = Vector2(0.67, 1.33)
+shape = SubResource("CapsuleShape2D_6hr2a")
+
+[node name="head_hitbox" type="Area2D" parent="." unique_id=158523048]
+unique_name_in_owner = true
+visible = false
+position = Vector2(2.7272725, -0.9090909)
 collision_layer = 4
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=735637850]
-position = Vector2(2.5, 2.5)
-scale = Vector2(0.67, 1.33)
-shape = SubResource("RectangleShape2D_yag7t")
-debug_color = Color(0.928158, 0.24173215, 0.30770168, 0.41960785)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="head_hitbox" unique_id=191144116]
+z_index = 4000
+shape = SubResource("CircleShape2D_6hr2a")
 
 [node name="WallDetector" type="RayCast2D" parent="." unique_id=983806760]
 position = Vector2(2, 12)
@@ -201,10 +229,22 @@ target_position = Vector2(0, 21)
 
 [node name="PlayerDetector" type="RayCast2D" parent="." unique_id=112894680]
 position = Vector2(-1, 13)
-target_position = Vector2(98, 0)
+target_position = Vector2(151.909, 0)
 collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false
 
 [node name="BoneStartPosition" type="Marker2D" parent="." unique_id=1354078400]
 position = Vector2(12.727272, 8.090909)
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1866754218]
+visible = false
+z_index = 4000
+position = Vector2(-2.7272725, 0)
+rect = Rect2(0.9090909, -1.8181818, 7.988986, 2.6112812)
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="area_entered" from="body_hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="area_entered" from="head_hitbox" to="." method="_on_head_hitbox_area_entered"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

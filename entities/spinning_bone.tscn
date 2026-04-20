@@ -56,12 +56,11 @@ z_index = 100
 z_as_relative = false
 sprite_frames = SubResource("SpriteFrames_cjyle")
 autoplay = "default"
+speed_scale = 3.0
 
-[node name="SelfDestructTimer" type="Timer" parent="." unique_id=393023214]
-wait_time = 10.0
-one_shot = true
-autostart = true
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1059061961]
+rect = Rect2(-6.0457134, -6.217638, 12.148733, 12.206041)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="timeout" from="SelfDestructTimer" to="." method="_on_self_destruct_timer_timeout"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

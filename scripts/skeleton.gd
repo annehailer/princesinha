@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Skeleton
 
 enum SkeletonState {
 	walk,
@@ -7,11 +8,13 @@ enum SkeletonState {
 }
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var hitbox: Area2D = $hitbox
+@onready var body_hitbox: Area2D = %body_hitbox
+@onready var head_hitbox: Area2D = %head_hitbox
 @onready var wall_detector: RayCast2D = $WallDetector
 @onready var ground_detector: RayCast2D = $GroundDetector
 @onready var player_detector: RayCast2D = $PlayerDetector
 @onready var bone_start_position: Node2D = $BoneStartPosition
+var is_on_screen: bool = false
 
 
 const SPINNING_BONE = preload("uid://dv7eoyldq1xb4")
@@ -19,7 +22,7 @@ const SPINNING_BONE = preload("uid://dv7eoyldq1xb4")
 
 const SPEED = 20.0
 const JUMP_VELOCITY = -400.0
-var direction = 1
+var direction = -1
 
 var status: SkeletonState
 
@@ -63,7 +66,10 @@ func go_to_attack_state():
 func go_to_dead_state():
 	status = SkeletonState.dead
 	sprite.play("dead")
-	hitbox.process_mode = Node.PROCESS_MODE_DISABLED
+	#body_hitbox.process_mode = Node.PROCESS_MODE_DISABLED
+	#head_hitbox.process_mode = Node.PROCESS_MODE_DISABLED
+	#body_hitbox.monitoring = false
+	#head_hitbox.monitoring = false
 	velocity = Vector2.ZERO
 
 
@@ -84,6 +90,7 @@ func walk_state(_delta):
 		direction *= -1
 		
 	if player_detector.is_colliding():
+		if !is_on_screen: return
 		if bone_timer > 0: return
 		go_to_attack_state()
 		return
@@ -99,6 +106,7 @@ func dead_state(_delta):
 
 
 func take_damage():
+	if status == SkeletonState.dead: return
 	do_blink()
 	go_to_dead_state()
 
@@ -137,10 +145,51 @@ func do_blink():
 func _set_flash(value: float):
 	sprite.material.set_shader_parameter("flash_pct", value)
 
-#############################################################################
+
+#---------------------------------------------------------------
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if sprite.animation == "attack":
 		go_to_walk_state()
 		return
+
+
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	is_on_screen = true
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	is_on_screen = false
+	if status == SkeletonState.attack: go_to_walk_state()
+
+
+func kill_player(player: Player) -> void:
+	await get_tree().create_timer(0.05).timeout
+	
+	if !is_instance_valid(player):
+		return
+	
+	if status == SkeletonState.dead:
+		return
+	
+	player.go_to_dead_state()
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if status == SkeletonState.dead: return
+	if area.is_in_group("PlayerBody"):
+		var player: Player = area.get_parent()
+		kill_player(player)
+	if area.is_in_group("BubbleGum"):
+		take_damage()
+		ScreenShake.do_screen_shake(2, 0.5)
+		area.get_parent().queue_free()
+
+
+func _on_head_hitbox_area_entered(area: Area2D) -> void:
+	if status == SkeletonState.dead: return
+	if area.is_in_group("PlayerFeet"):
+		take_damage()
+		var player: Player = area.get_parent()
+		player.apply_jump_force()
+		ScreenShake.do_screen_shake(3.5, 0.5)

@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 enum PlayerState {
 	idle,
@@ -14,8 +15,8 @@ enum PlayerState {
 
 
 const MAX_SPEED = 23
-var friction: float = 4
-var acceleration: float = 50
+var friction: float = 6
+var acceleration: float = 80
 var start_jump_timer: bool = false
 var set_jump_timer: float = 0
 var set_jump_cooldown: float = 0.15
@@ -42,6 +43,7 @@ func move(delta):
 
 
 func _ready() -> void:
+	#Engine.time_scale = 0.5
 	spawn_pos = global_position
 	go_to_idle_state()
 
@@ -84,6 +86,7 @@ func go_to_jump_state():
 
 
 func go_to_dead_state():
+	if status == PlayerState.dead: return
 	status = PlayerState.dead
 	sprite.play("dead")
 	velocity.x = 0
@@ -135,7 +138,8 @@ func apply_jump_force():
 #------------------------------ SHOOTING ------------------
 
 const BULLET = preload("uid://c2cueqjl5qdo1")
-@onready var bullet_start_position: Node2D = %BulletStartPosition
+@onready var spawn_bubble_gum_posRight: Marker2D = %spawn_bubble_gum_posRight
+@onready var spawn_bubble_gum_posLeft: Marker2D = %spawn_bubble_gum_posLeft
 
 var bullet_cooldown: float = 0.5
 var bullet_timer: float = 0 
@@ -152,8 +156,10 @@ func do_shooting():
 	var bullet_instance = BULLET.instantiate()
 	var player_bullet: PlayerBullet = bullet_instance
 	if sprite.flip_h: player_bullet.moving_right = false
-	bullet_instance.position = bullet_start_position.global_position
 	add_sibling(bullet_instance)
+	if sprite.flip_h: bullet_instance.global_position = spawn_bubble_gum_posLeft.global_position
+	else: bullet_instance.global_position = spawn_bubble_gum_posRight.global_position
+
 
 
 func die():
@@ -167,23 +173,11 @@ func check_if_fall():
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Enemies"):
-		hit_enemy(area)
+		#hit_enemy(area)
+		pass
 	elif area.is_in_group("EnemyBullet"):
 		hit_enemy_bullet()
 
-
-
-func hit_enemy(area: Area2D):
-	if velocity.y > 0:
-		# inimigo morre
-		area.get_parent().take_damage()
-		ScreenShake.do_screen_shake(3.5, 0.5)
-		#go_to_jump_state()
-		apply_jump_force()
-	else:
-		# player morre
-		if status != PlayerState.dead:
-			go_to_dead_state()
 
 func hit_enemy_bullet():
 	go_to_dead_state()
@@ -191,7 +185,7 @@ func hit_enemy_bullet():
 
 func _on_reload_timer_timeout() -> void:
 	get_tree().reload_current_scene()
-	
+
 
 #--------------------------------------- BLINK ANIMATION --------------------------
 
@@ -229,6 +223,5 @@ func set_jump_redo(delta: float):
 			set_jump_timer -= delta
 		if set_jump_timer <= 0:
 			if status == PlayerState.jump: return 
-			print("vai pro jump state")
 			go_to_jump_state()
 			start_jump_timer = false

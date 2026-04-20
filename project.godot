@@ -33,6 +33,10 @@ Player=""
 Enemies=""
 EnemyBullet=""
 PlayerBullet=""
+PlayerBody=""
+BubbleGum=""
+PlayerFeet=""
+SkeletonBody=""
 
 [input]
 

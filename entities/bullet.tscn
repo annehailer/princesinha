@@ -1,54 +1,70 @@
 [gd_scene format=3 uid="uid://c2cueqjl5qdo1"]
 
 [ext_resource type="Script" uid="uid://xoif37gxhuxh" path="res://scripts/bullet.gd" id="1_opdhh"]
+[ext_resource type="Shader" uid="uid://gs1cb2uypxx8" path="res://shaders/blink_shader.gdshader" id="2_1at37"]
 [ext_resource type="Texture2D" uid="uid://bdpulfycu5g6g" path="res://sprites/Princess Sera/Projectile_Bubble (8 x 8).png" id="2_a2iae"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yqk2q"]
+shader = ExtResource("2_1at37")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_pct = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qwydi"]
 atlas = ExtResource("2_a2iae")
 region = Rect2(0, 0, 8, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xw300"]
-atlas = ExtResource("2_a2iae")
-region = Rect2(8, 0, 8, 8)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_m2l4i"]
 animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qwydi")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xw300")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_xw300"]
-radius = 8.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_opdhh"]
+radius = 4.1389422
 
-[node name="bullet" type="Area2D" unique_id=2051691701 groups=["PlayerBullet"]]
-scale = Vector2(0.525, 0.525)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_opdhh"]
+size = Vector2(8.7, 1.565)
+
+[node name="bullet" type="CharacterBody2D" unique_id=984262332]
 collision_layer = 16
 collision_mask = 21
+motion_mode = 1
 script = ExtResource("1_opdhh")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1595379177]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1595379177]
+unique_name_in_owner = true
 z_index = 100
 z_as_relative = false
-scale = Vector2(2, 2)
+material = SubResource("ShaderMaterial_yqk2q")
+scale = Vector2(0.7, 0.7)
 sprite_frames = SubResource("SpriteFrames_m2l4i")
 
-[node name="SelfDestructTimer" type="Timer" parent="." unique_id=1385052630]
-wait_time = 10.0
-one_shot = true
-autostart = true
+[node name="Area2D" type="Area2D" parent="." unique_id=1175254185 groups=["BubbleGum"]]
+position = Vector2(-0.0785319, 0.019632975)
+scale = Vector2(0.7, 0.7)
+collision_layer = 16
+collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2091168521]
-scale = Vector2(1.0000002, 1.0000002)
-shape = SubResource("CircleShape2D_xw300")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1239588228]
+shape = SubResource("CircleShape2D_opdhh")
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="timeout" from="SelfDestructTimer" to="." method="_on_self_destruct_timer_timeout"]
+[node name="check_walls_area" type="Area2D" parent="." unique_id=1359947532]
+position = Vector2(0, -2.3166814)
+scale = Vector2(0.7, 0.7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="check_walls_area" unique_id=1298071325]
+scale = Vector2(1.0000004, 1.0000004)
+shape = SubResource("RectangleShape2D_opdhh")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1922443380]
+rect = Rect2(-3.0474901, -2.9212964, 6.097946, 5.8462963)
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="check_walls_area" to="." method="_on_check_walls_area_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

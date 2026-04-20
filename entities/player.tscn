@@ -127,14 +127,17 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rfe5m"]
-radius = 2.5342445
-height = 9.795456
+radius = 0.40481758
+height = 14.64001
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qsoyl"]
 size = Vector2(19.425652, 18.333345)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6nm46"]
+radius = 2.086028
+height = 19.357697
+
 [node name="player" type="CharacterBody2D" unique_id=625220098 groups=["Player"]]
-position = Vector2(0, -15)
 collision_layer = 2
 collision_mask = 9
 script = ExtResource("1_merdl")
@@ -151,31 +154,48 @@ animation = &"walk"
 autoplay = "idle"
 speed_scale = 0.3
 
-[node name="ColFeet" type="CollisionShape2D" parent="." unique_id=739026260]
-z_index = 1
-position = Vector2(0.4642428, 11.675332)
+[node name="ColGround" type="CollisionShape2D" parent="." unique_id=739026260]
+visible = false
+z_index = 4000
+position = Vector2(0.34660888, 14.527943)
 rotation = 1.5707964
 scale = Vector2(1.3, 1.3)
 shape = SubResource("CapsuleShape2D_rfe5m")
 
-[node name="hitbox" type="Area2D" parent="." unique_id=154391381 groups=["Player"]]
+[node name="BodyArea" type="Area2D" parent="." unique_id=154391381 groups=["PlayerBody"]]
+visible = false
 collision_layer = 2
 collision_mask = 20
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=1668980295]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BodyArea" unique_id=1668980295]
+z_index = 4000
 position = Vector2(0.24409808, 1.2200956)
 scale = Vector2(0.84999996, 1.4999999)
 shape = SubResource("RectangleShape2D_qsoyl")
 debug_color = Color(0.838776, 0.1164641, 0.17806125, 0.41960785)
 
+[node name="FeetArea" type="Area2D" parent="." unique_id=934531646 groups=["PlayerFeet"]]
+visible = false
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FeetArea" unique_id=1191871829]
+z_index = 4000
+position = Vector2(0.28417015, 14.4929)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_6nm46")
+
 [node name="ReloadTimer" type="Timer" parent="." unique_id=1488829164]
 wait_time = 0.4
 one_shot = true
 
-[node name="BulletStartPosition" type="Marker2D" parent="." unique_id=564652362]
+[node name="spawn_bubble_gum_posRight" type="Marker2D" parent="." unique_id=564652362]
 unique_name_in_owner = true
-z_index = 4096
-position = Vector2(0.93491554, 9.566891)
+position = Vector2(4.9923553, 5.0955706)
 
-[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
+[node name="spawn_bubble_gum_posLeft" type="Marker2D" parent="." unique_id=148619684]
+unique_name_in_owner = true
+position = Vector2(-4.992, 5.096)
+
+[connection signal="area_entered" from="BodyArea" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
