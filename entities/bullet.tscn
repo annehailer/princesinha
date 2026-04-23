@@ -2,22 +2,22 @@
 
 [ext_resource type="Script" uid="uid://xoif37gxhuxh" path="res://scripts/bullet.gd" id="1_opdhh"]
 [ext_resource type="Shader" uid="uid://gs1cb2uypxx8" path="res://shaders/blink_shader.gdshader" id="2_1at37"]
-[ext_resource type="Texture2D" uid="uid://bdpulfycu5g6g" path="res://sprites/Princess Sera/Projectile_Bubble (8 x 8).png" id="2_a2iae"]
+[ext_resource type="Texture2D" uid="uid://j5cfi2fiek2b" path="res://sprites/Princess Sera 2.0/powers/bubble pink.png" id="3_a2iae"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yqk2q"]
 shader = ExtResource("2_1at37")
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_pct = 0.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qwydi"]
-atlas = ExtResource("2_a2iae")
+[sub_resource type="AtlasTexture" id="AtlasTexture_1at37"]
+atlas = ExtResource("3_a2iae")
 region = Rect2(0, 0, 8, 8)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_m2l4i"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qwydi")
+"texture": SubResource("AtlasTexture_1at37")
 }],
 "loop": false,
 "name": &"default",
@@ -31,7 +31,6 @@ radius = 4.1389422
 size = Vector2(8.7, 1.565)
 
 [node name="bullet" type="CharacterBody2D" unique_id=984262332]
-position = Vector2(1, 0)
 collision_layer = 16
 collision_mask = 21
 motion_mode = 1

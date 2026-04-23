@@ -3,14 +3,24 @@ class_name Player
 
 enum PlayerState {
 	idle,
+	idle_power,
+	walk_power,
+	jump_power,
+	fall_power,
 	walk,
 	jump,
+	fall,
 	dead
 }
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 @onready var reload_timer: Timer = $ReloadTimer
+
+const HOLD_FORCE := 900.0
+const MAX_HOLD_TIME := 0.2
+
+var hold_time := 0.0
 
 
 
@@ -27,6 +37,8 @@ var spawn_pos: Vector2
 
 
 var status: PlayerState
+
+# ------------------------------------------------- PHYSICS ------------------------------------------------ @
 
 func move(delta):
 	var direction := Input.get_axis("left", "right")
@@ -69,30 +81,44 @@ func _physics_process(delta: float) -> void:
 			dead_state(delta)
 	move_and_slide()
 
+# ------------------------------------------- GO TO X STATE ----------------------------------------------
 
 func go_to_idle_state():
 	status = PlayerState.idle
-	sprite.play("idle")
+	if has_shoot_power:
+		sprite.play("idle_power")
+	else:
+		sprite.play("idle")
 
 
 func go_to_walk_state():
 	status = PlayerState.walk
-	sprite.play("walk")
+	if has_shoot_power:
+		sprite.play("walk_power")
+	else:
+		sprite.play("walk")
 
 
 func go_to_jump_state():
 	status = PlayerState.jump
-	sprite.play("jump")
+	if has_jump_power:
+		sprite.play("jump_power")
+	else:
+		sprite.play("jump")
 
 
 func go_to_dead_state():
 	if status == PlayerState.dead: return
 	status = PlayerState.dead
+	#if has_shoot_power:
+		#sprite.play("hurt_power")
+	#else:
 	sprite.play("dead")
 	velocity.x = 0
 	reload_timer.start()
 	do_blink()
 
+# ----------------------------------------------- STATES ------------------------------------------------
 
 func idle_state(delta):
 	move(delta)
@@ -120,22 +146,37 @@ func walk_state(delta):
 func dead_state(_delta):
 	pass
 
-
 func jump_State(delta):
 	move(delta)
+
+# ---------------------------------------------- JUMPING -----------------------------------------------------
+
+# SEGURANDO O BOTÃO → sobe mais (COM POWER UP)
+	if has_jump_power:
+		if Input.is_action_pressed("jump") and hold_time < MAX_HOLD_TIME and velocity.y < 0:
+			velocity.y -= HOLD_FORCE * delta
+			hold_time += delta
+
+	# SOLTOU → corta o pulo
+	if Input.is_action_just_released("jump") and velocity.y < 0:
+		velocity.y *= 0.5
+
+	# CAIU NO CHÃO
 	if is_on_floor():
 		if velocity.x == 0:
 			go_to_idle_state()
 		else:
 			go_to_walk_state()
+
 		start_jump_timer = false
 		set_jump_timer = set_jump_cooldown
 		return
 
 func apply_jump_force():
 	velocity.y = -JUMP_VELOCITY
+	hold_time = 0.0
 
-#------------------------------ SHOOTING ------------------
+#------------------------------------------------ SHOOTING ----------------------------------------------
 
 const BULLET = preload("uid://c2cueqjl5qdo1")
 @onready var spawn_bubble_gum_posRight: Marker2D = %spawn_bubble_gum_posRight
@@ -145,7 +186,11 @@ var bullet_cooldown: float = 0.5
 var bullet_timer: float = 0 
 
 func shoot_behavior():
+	if !has_shoot_power:
+		return
+	
 	if bullet_timer > 0: return
+	
 	if Input.is_action_just_pressed("shoot"):
 		do_shooting()
 
@@ -160,7 +205,7 @@ func do_shooting():
 	if sprite.flip_h: bullet_instance.global_position = spawn_bubble_gum_posLeft.global_position
 	else: bullet_instance.global_position = spawn_bubble_gum_posRight.global_position
 
-
+# --------------------------------------------------- DYING -------------------------------------------------
 
 func die():
 	global_position = spawn_pos
@@ -182,12 +227,12 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 func hit_enemy_bullet():
 	go_to_dead_state()
 
+# ------------------------------------------- RESPAWN -----------------------------------------------------
 
 func _on_reload_timer_timeout() -> void:
 	get_tree().reload_current_scene()
-
-
-#--------------------------------------- BLINK ANIMATION --------------------------
+	
+#--------------------------------------- BLINK ANIMATION --------------------------------------------------
 
 var blink_duration: float = 0.8
 var blink_tween: Tween
@@ -211,7 +256,7 @@ func do_blink():
 func _set_flash(value: float):
 	sprite.material.set_shader_parameter("flash_pct", value)
 
-############################################################################
+#------------------------------------------------- JUMP RE-DO -----------------------------------------------
 
 func set_jump_redo(delta: float):
 	if status != PlayerState.jump:
@@ -225,3 +270,22 @@ func set_jump_redo(delta: float):
 			if status == PlayerState.jump: return 
 			go_to_jump_state()
 			start_jump_timer = false
+
+#---------------------------------------------- RECEBER POWER UPS ------------------------------------------
+
+var has_jump_power := false
+var has_shoot_power := false
+
+func give_jump_power():
+	has_jump_power = true
+	print("Ganhou pulo forte")
+
+func give_shoot_power():
+	has_shoot_power = true
+	print("Ganhou tiro")
+
+func give_all_powers():
+	has_jump_power = true
+	has_shoot_power = true
+	print("Ganhou todos os poderes")
+	sprite.play("idle_power")

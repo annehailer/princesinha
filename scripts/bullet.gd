@@ -44,12 +44,12 @@ func kick():
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	print("af sumi :c")
+	print("pop ! :3")
 	queue_free()
 
 
 
-#------------- Pump Anim -------------
+#-------------------------------- PUMP ANIM ----------------
 
 var pump_tween: Tween
 

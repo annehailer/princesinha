@@ -35,6 +35,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if bone_timer > 0:
 		bone_timer -= delta
+	#print(is_on_screen)
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity
@@ -51,6 +52,7 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
+# --------------------------------------- GO TO X STATE --------------------------------------
 
 func go_to_walk_state():
 	status = SkeletonState.walk
@@ -72,6 +74,7 @@ func go_to_dead_state():
 	#head_hitbox.monitoring = false
 	velocity = Vector2.ZERO
 
+# ----------------------------------------- STATES ------------------------------------------------
 
 func walk_state(_delta):
 	if status == SkeletonState.dead: return
@@ -80,6 +83,7 @@ func walk_state(_delta):
 	else:
 		velocity.x = 0
 	
+# ---------------------------------------------- RAY CAST ------------------------------
 	
 	if wall_detector.is_colliding():
 		scale.x *= -1
@@ -90,7 +94,9 @@ func walk_state(_delta):
 		direction *= -1
 		
 	if player_detector.is_colliding():
+		#print("detectou player")
 		if !is_on_screen: return
+		#print("tela")
 		if bone_timer > 0: return
 		go_to_attack_state()
 		return
@@ -104,6 +110,7 @@ func attack_state(_delta):
 func dead_state(_delta):
 	pass
 
+# --------------------------------------- DAMAGE / HIT ------------------------------------- 
 
 func take_damage():
 	if status == SkeletonState.dead: return
@@ -146,7 +153,7 @@ func _set_flash(value: float):
 	sprite.material.set_shader_parameter("flash_pct", value)
 
 
-#---------------------------------------------------------------
+#---------------------------------------------------------------------------------------
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
@@ -175,11 +182,14 @@ func kill_player(player: Player) -> void:
 	
 	player.go_to_dead_state()
 
+
 func _on_hitbox_area_entered(area: Area2D) -> void:
+	# player morre se encostar no esqueleto
 	if status == SkeletonState.dead: return
 	if area.is_in_group("PlayerBody"):
 		var player: Player = area.get_parent()
 		kill_player(player)
+	# esqueleto morre se a bala encostar nele
 	if area.is_in_group("BubbleGum"):
 		take_damage()
 		ScreenShake.do_screen_shake(2, 0.5)

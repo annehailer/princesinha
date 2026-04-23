@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cdanm25wysld2" path="res://entities/camera.tscn" id="9_m16c4"]
 [ext_resource type="PackedScene" uid="uid://cd4menxx8bdk5" path="res://entities/level_end.tscn" id="10_bt8wy"]
 [ext_resource type="PackedScene" uid="uid://bcxcohawfiqgg" path="res://entities/skeleton.tscn" id="11_ggks1"]
+[ext_resource type="PackedScene" uid="uid://bdc2x7866e2nh" path="res://entities/power_up.tscn" id="12_h6gnm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_17rxn"]
 size = Vector2(20, 210.25)
@@ -100,64 +101,62 @@ debug_color = Color(0.88548213, 0.32215047, 0.2189183, 0.41960785)
 position = Vector2(1983, 235)
 next_level = "forest"
 
-[node name="enemys" type="Node2D" parent="." unique_id=1637570110]
+[node name="Enemies" type="Node2D" parent="." unique_id=1637570110]
 
-[node name="skeleton" parent="enemys" unique_id=370362738 instance=ExtResource("11_ggks1")]
-position = Vector2(286, 157.99998)
+[node name="skeleton" parent="Enemies" unique_id=370362738 instance=ExtResource("11_ggks1")]
+position = Vector2(362, 156.99998)
 rotation = 3.1415927
 scale = Vector2(1.1, -1.1)
 
-[node name="skeleton2" parent="enemys" unique_id=1284785071 instance=ExtResource("11_ggks1")]
-position = Vector2(367, 158)
+[node name="skeleton2" parent="Enemies" unique_id=1356189761 instance=ExtResource("11_ggks1")]
+position = Vector2(515, 156.99998)
 rotation = 3.1415927
 scale = Vector2(1.1, -1.1)
 
-[node name="skeleton3" parent="enemys" unique_id=1909694443 instance=ExtResource("11_ggks1")]
-position = Vector2(437, 157.99998)
+[node name="skeleton4" parent="Enemies" unique_id=2119524961 instance=ExtResource("11_ggks1")]
+position = Vector2(480, 77.999985)
 rotation = 3.1415927
 scale = Vector2(1.1, -1.1)
 
-[node name="skeleton4" parent="enemys" unique_id=1574653380 instance=ExtResource("11_ggks1")]
-position = Vector2(501, 158)
+[node name="skeleton5" parent="Enemies" unique_id=1440548026 instance=ExtResource("11_ggks1")]
+position = Vector2(725, 46)
 rotation = 3.1415927
 scale = Vector2(1.1, -1.1)
 
-[node name="skeleton5" parent="enemys" unique_id=1898362168 instance=ExtResource("11_ggks1")]
-position = Vector2(579, 156.99998)
+[node name="skeleton6" parent="Enemies" unique_id=701200864 instance=ExtResource("11_ggks1")]
+position = Vector2(892, 93)
 rotation = 3.1415927
 scale = Vector2(1.1, -1.1)
 
-[node name="skeleton6" parent="enemys" unique_id=1068725089 instance=ExtResource("11_ggks1")]
-position = Vector2(635, 156.99998)
+[node name="skeleton7" parent="Enemies" unique_id=1792904121 instance=ExtResource("11_ggks1")]
+position = Vector2(1232, 61.999992)
 rotation = 3.1415927
 scale = Vector2(1.1, -1.1)
 
-[node name="skeleton7" parent="enemys" unique_id=689089682 instance=ExtResource("11_ggks1")]
-position = Vector2(488, 78)
+[node name="skeleton8" parent="Enemies" unique_id=363698377 instance=ExtResource("11_ggks1")]
+position = Vector2(1952, 189)
 rotation = 3.1415927
 scale = Vector2(1.1, -1.1)
 
-[node name="skeleton8" parent="enemys" unique_id=330821020 instance=ExtResource("11_ggks1")]
-position = Vector2(381, 77)
+[node name="skeleton9" parent="Enemies" unique_id=1012511743 instance=ExtResource("11_ggks1")]
+position = Vector2(58, 126)
 rotation = 3.1415927
 scale = Vector2(1.1, -1.1)
 
-[node name="skeleton9" parent="enemys" unique_id=1189890635 instance=ExtResource("11_ggks1")]
-position = Vector2(72, 125)
+[node name="skeleton10" parent="Enemies" unique_id=995017313 instance=ExtResource("11_ggks1")]
+position = Vector2(59, 61.999992)
 rotation = 3.1415927
 scale = Vector2(1.1, -1.1)
 
-[node name="skeleton10" parent="enemys" unique_id=2104279911 instance=ExtResource("11_ggks1")]
-position = Vector2(47, 71)
+[node name="skeleton11" parent="Enemies" unique_id=271070477 instance=ExtResource("11_ggks1")]
+position = Vector2(59, 6)
 rotation = 3.1415927
 scale = Vector2(1.1, -1.1)
 
-[node name="skeleton11" parent="enemys" unique_id=112240764 instance=ExtResource("11_ggks1")]
-position = Vector2(73, 7.0000076)
+[node name="skeleton3" parent="Enemies" unique_id=1415676233 instance=ExtResource("11_ggks1")]
+position = Vector2(630.99994, 157.00002)
 rotation = 3.1415927
 scale = Vector2(1.1, -1.1)
 
-[node name="skeleton12" parent="enemys" unique_id=1413740721 instance=ExtResource("11_ggks1")]
-position = Vector2(44, -58.000004)
-rotation = 3.1415927
-scale = Vector2(1.1, -1.1)
+[node name="PowerUp" parent="." unique_id=490122749 instance=ExtResource("12_h6gnm")]
+position = Vector2(271, 168)
