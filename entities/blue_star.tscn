@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://caon7mylyry4v"]
+
+[ext_resource type="Texture2D" uid="uid://4kj8awgt8tmn" path="res://sprites/power ups/blue_star.png" id="1_im6hq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3thjf"]
+atlas = ExtResource("1_im6hq")
+region = Rect2(0, 0, 33, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8yb1m"]
+atlas = ExtResource("1_im6hq")
+region = Rect2(33, 0, 33, 33)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ukbcn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3thjf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8yb1m")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m3amx"]
+
+[node name="BlueStar" type="Area2D" unique_id=1845681587 groups=["BlueStar"]]
+collision_layer = 32
+collision_mask = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=145017563]
+sprite_frames = SubResource("SpriteFrames_ukbcn")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1318329888]
+shape = SubResource("CircleShape2D_m3amx")
+debug_color = Color(0.886569, 0.16565475, 0.70480067, 0.41960785)

@@ -2,15 +2,13 @@
 
 [ext_resource type="Shader" uid="uid://gs1cb2uypxx8" path="res://shaders/blink_shader.gdshader" id="1_i623q"]
 [ext_resource type="Script" uid="uid://cmu4t2a4ru2b4" path="res://scripts/player.gd" id="1_merdl"]
-[ext_resource type="Texture2D" uid="uid://dsmk0ycii38rw" path="res://sprites/Princess Sera/Jumping_&_Falling_(Dressed) (16 x 32).png" id="2_rfe5m"]
 [ext_resource type="Texture2D" uid="uid://b7vl85rjc86p6" path="res://sprites/Princess Sera 2.0/hurt.png" id="3_tjdhl"]
 [ext_resource type="Texture2D" uid="uid://tgtqgr0xiuf7" path="res://sprites/Princess Sera 2.0/dead 32.png" id="4_x08pd"]
-[ext_resource type="Texture2D" uid="uid://blm74kpdxfapl" path="res://sprites/Princess Sera/Walking_(Dressed) (16 x 32).png" id="5_i623q"]
-[ext_resource type="Texture2D" uid="uid://0puqle6xageg" path="res://sprites/Princess Sera 2.0/powers/jump & fall pinkk.png" id="6_dchgp"]
+[ext_resource type="Texture2D" uid="uid://0puqle6xageg" path="res://sprites/Princess Sera 2.0/powers/shoot/jump & fall pinkk.png" id="6_dchgp"]
 [ext_resource type="Texture2D" uid="uid://du5btckup37wy" path="res://sprites/Princess Sera 2.0/Idle_(Dressed) (16 x 32).png" id="7_kdgjc"]
-[ext_resource type="Texture2D" uid="uid://dlgc2cnfq6ryj" path="res://sprites/Princess Sera 2.0/powers/hurt pink.png" id="7_x08pd"]
-[ext_resource type="Texture2D" uid="uid://bjry21fkl8upk" path="res://sprites/Princess Sera 2.0/powers/Idle_ pink.png" id="8_q0i8f"]
-[ext_resource type="Texture2D" uid="uid://d2i4ku65mql38" path="res://sprites/Princess Sera 2.0/powers/Walking_.png" id="11_dchgp"]
+[ext_resource type="Texture2D" uid="uid://dlgc2cnfq6ryj" path="res://sprites/Princess Sera 2.0/powers/shoot/hurt pink.png" id="7_x08pd"]
+[ext_resource type="Texture2D" uid="uid://bjry21fkl8upk" path="res://sprites/Princess Sera 2.0/powers/shoot/Idle_ pink.png" id="8_q0i8f"]
+[ext_resource type="Texture2D" uid="uid://d2i4ku65mql38" path="res://sprites/Princess Sera 2.0/powers/shoot/Walking_.png" id="11_dchgp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i623q"]
 shader = ExtResource("1_i623q")
@@ -25,8 +23,11 @@ region = Rect2(0, 0, 16, 32)
 atlas = ExtResource("4_x08pd")
 region = Rect2(0, 0, 32, 32)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ef06p"]
+load_path = "res://.godot/imported/Jumping_&_Falling_(Dressed) (16 x 32).png-0d751234e0636b8e974e321da14207f8.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_qsoyl"]
-atlas = ExtResource("2_rfe5m")
+atlas = SubResource("CompressedTexture2D_ef06p")
 region = Rect2(16, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1n8aq"]
@@ -58,7 +59,7 @@ atlas = ExtResource("8_q0i8f")
 region = Rect2(16, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ef06p"]
-atlas = ExtResource("2_rfe5m")
+atlas = SubResource("CompressedTexture2D_ef06p")
 region = Rect2(0, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_evlff"]
@@ -69,12 +70,15 @@ region = Rect2(0, 0, 16, 32)
 atlas = ExtResource("6_dchgp")
 region = Rect2(16, 0, 16, 32)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tjdhl"]
+load_path = "res://.godot/imported/Walking_(Dressed) (16 x 32).png-3030c93b311ce10736ba9e2cd4ede3f9.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_oprnr"]
-atlas = ExtResource("5_i623q")
+atlas = SubResource("CompressedTexture2D_tjdhl")
 region = Rect2(0, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8rie4"]
-atlas = ExtResource("5_i623q")
+atlas = SubResource("CompressedTexture2D_tjdhl")
 region = Rect2(16, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q0i8f"]
@@ -233,7 +237,7 @@ shape = SubResource("CapsuleShape2D_rfe5m")
 [node name="BodyArea" type="Area2D" parent="." unique_id=154391381 groups=["PlayerBody"]]
 visible = false
 collision_layer = 2
-collision_mask = 20
+collision_mask = 52
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BodyArea" unique_id=1668980295]
 z_index = 4000

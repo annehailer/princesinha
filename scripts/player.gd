@@ -156,7 +156,7 @@ func jump_State(delta):
 		if Input.is_action_pressed("jump") and hold_time < MAX_HOLD_TIME and velocity.y < 0:
 			velocity.y -= HOLD_FORCE * delta
 			hold_time += delta
-
+	
 	# SOLTOU → corta o pulo
 	if Input.is_action_just_released("jump") and velocity.y < 0:
 		velocity.y *= 0.5
@@ -167,7 +167,7 @@ func jump_State(delta):
 			go_to_idle_state()
 		else:
 			go_to_walk_state()
-
+	
 		start_jump_timer = false
 		set_jump_timer = set_jump_cooldown
 		return
@@ -217,11 +217,18 @@ func check_if_fall():
 
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("Enemies"):
-		#hit_enemy(area)
-		pass
-	elif area.is_in_group("EnemyBullet"):
+	if area.is_in_group("EnemyBullet"):
 		hit_enemy_bullet()
+	
+	if area.is_in_group("BlueStar"):
+		area.queue_free()
+		print("pegou blue star")
+		pass
+	
+	if area.is_in_group("PinkStar"):
+		area.queue_free()
+		give_shoot_power()
+
 
 
 func hit_enemy_bullet():
@@ -231,7 +238,7 @@ func hit_enemy_bullet():
 
 func _on_reload_timer_timeout() -> void:
 	get_tree().reload_current_scene()
-	
+
 #--------------------------------------- BLINK ANIMATION --------------------------------------------------
 
 var blink_duration: float = 0.8

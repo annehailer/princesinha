@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://xoif37gxhuxh" path="res://scripts/bullet.gd" id="1_opdhh"]
 [ext_resource type="Shader" uid="uid://gs1cb2uypxx8" path="res://shaders/blink_shader.gdshader" id="2_1at37"]
-[ext_resource type="Texture2D" uid="uid://j5cfi2fiek2b" path="res://sprites/Princess Sera 2.0/powers/bubble pink.png" id="3_a2iae"]
+[ext_resource type="Texture2D" uid="uid://j5cfi2fiek2b" path="res://sprites/Princess Sera 2.0/powers/shoot/bubble pink.png" id="3_a2iae"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yqk2q"]
 shader = ExtResource("2_1at37")

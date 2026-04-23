@@ -11,7 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://cdanm25wysld2" path="res://entities/camera.tscn" id="9_m16c4"]
 [ext_resource type="PackedScene" uid="uid://cd4menxx8bdk5" path="res://entities/level_end.tscn" id="10_bt8wy"]
 [ext_resource type="PackedScene" uid="uid://bcxcohawfiqgg" path="res://entities/skeleton.tscn" id="11_ggks1"]
-[ext_resource type="PackedScene" uid="uid://bdc2x7866e2nh" path="res://entities/power_up.tscn" id="12_h6gnm"]
+[ext_resource type="PackedScene" uid="uid://bdc2x7866e2nh" path="res://entities/pink_star.tscn" id="12_h6gnm"]
+[ext_resource type="PackedScene" uid="uid://caon7mylyry4v" path="res://entities/blue_star.tscn" id="13_u3uon"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_17rxn"]
 size = Vector2(20, 210.25)
@@ -158,5 +159,8 @@ position = Vector2(630.99994, 157.00002)
 rotation = 3.1415927
 scale = Vector2(1.1, -1.1)
 
-[node name="PowerUp" parent="." unique_id=490122749 instance=ExtResource("12_h6gnm")]
-position = Vector2(271, 168)
+[node name="PinkStar" parent="." unique_id=490122749 instance=ExtResource("12_h6gnm")]
+position = Vector2(0, 181)
+
+[node name="BlueStar" parent="." unique_id=1845681587 instance=ExtResource("13_u3uon")]
+position = Vector2(238, 197)
