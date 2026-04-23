@@ -1,7 +1,19 @@
 [gd_scene format=3 uid="uid://bdc2x7866e2nh"]
 
-[ext_resource type="Script" uid="uid://vyvm3rn46ry7" path="res://scripts/bubble_power.gd" id="1_vdu3k"]
 [ext_resource type="Texture2D" uid="uid://bm4rsuviyrd11" path="res://sprites/power ups/pink_star.png" id="2_bk1wf"]
+
+[sub_resource type="GDScript" id="GDScript_nrc30"]
+script/source = "extends Area2D
+
+#@export var type: String = \"jump\" # ou \"shoot\"
+#
+#func _on_body_entered(body):
+	#if body is Player:
+		#if type == \"jump\" or \"shoot\":
+			#body.give_all_powers()
+		#
+		#queue_free()
+"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bk1wf"]
 atlas = ExtResource("2_bk1wf")
@@ -29,8 +41,8 @@ animations = [{
 
 [node name="PinkStar" type="Area2D" unique_id=490122749 groups=["PinkStar"]]
 collision_layer = 32
-collision_mask = 2
-script = ExtResource("1_vdu3k")
+collision_mask = 3
+script = SubResource("GDScript_nrc30")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=972504374]
 sprite_frames = SubResource("SpriteFrames_ukyhb")

@@ -115,7 +115,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_1n8aq")
 }],
 "loop": true,
-"name": &"fall_power",
+"name": &"fall_pink",
 "speed": 5.0
 }, {
 "frames": [{
@@ -131,7 +131,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_kdgjc")
 }],
 "loop": true,
-"name": &"hurt_power",
+"name": &"hurt_pink",
 "speed": 5.0
 }, {
 "frames": [{
@@ -153,7 +153,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_slxql")
 }],
 "loop": true,
-"name": &"idle_power",
+"name": &"idle_pink",
 "speed": 5.0
 }, {
 "frames": [{
@@ -172,7 +172,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_x08pd")
 }],
 "loop": true,
-"name": &"jump_power",
+"name": &"jump_pink",
 "speed": 5.0
 }, {
 "frames": [{
@@ -194,7 +194,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_0i614")
 }],
 "loop": true,
-"name": &"walk_power",
+"name": &"walk_pink",
 "speed": 20.0
 }]
 
@@ -222,7 +222,7 @@ material = SubResource("ShaderMaterial_i623q")
 position = Vector2(0.39999962, -4.129446)
 scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_qly61")
-animation = &"idle"
+animation = &"jump"
 autoplay = "idle"
 speed_scale = 0.3
 

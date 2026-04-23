@@ -3,10 +3,6 @@ class_name Player
 
 enum PlayerState {
 	idle,
-	idle_power,
-	walk_power,
-	jump_power,
-	fall_power,
 	walk,
 	jump,
 	fall,
@@ -86,7 +82,7 @@ func _physics_process(delta: float) -> void:
 func go_to_idle_state():
 	status = PlayerState.idle
 	if has_shoot_power:
-		sprite.play("idle_power")
+		sprite.play("idle_pink")
 	else:
 		sprite.play("idle")
 
@@ -94,15 +90,15 @@ func go_to_idle_state():
 func go_to_walk_state():
 	status = PlayerState.walk
 	if has_shoot_power:
-		sprite.play("walk_power")
+		sprite.play("walk_pink")
 	else:
 		sprite.play("walk")
 
 
 func go_to_jump_state():
 	status = PlayerState.jump
-	if has_jump_power:
-		sprite.play("jump_power")
+	if has_shoot_power:
+		sprite.play("jump_pink")
 	else:
 		sprite.play("jump")
 
@@ -223,7 +219,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("BlueStar"):
 		area.queue_free()
 		print("pegou blue star")
-		pass
+		give_jump_power()
 	
 	if area.is_in_group("PinkStar"):
 		area.queue_free()
