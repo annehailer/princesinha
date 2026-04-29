@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dofptm1gu5fyn"
-path="res://.godot/imported/quaver.ttf-2b0a6a60d652d8d804f99b266db4f378.fontdata"
+uid="uid://f28r7qoymr8o"
+path="res://.godot/imported/x8y12pxDenkiChip.woff2-7910a93059c934fd2a50f6416ab9a77b.fontdata"
 
 [deps]
 
-source_file="res://fonts/Quaver v1.0/quaver.ttf"
-dest_files=["res://.godot/imported/quaver.ttf-2b0a6a60d652d8d804f99b266db4f378.fontdata"]
+source_file="res://fonts/japanese/denkichip/x8y12pxDenkiChip.woff2"
+dest_files=["res://.godot/imported/x8y12pxDenkiChip.woff2-7910a93059c934fd2a50f6416ab9a77b.fontdata"]
 
 [params]
 
