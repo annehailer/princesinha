@@ -106,6 +106,7 @@ func go_to_jump_state():
 func go_to_dead_state():
 	if status == PlayerState.dead: return
 	status = PlayerState.dead
+	Globals.score = 0
 	#if has_shoot_power:
 		#sprite.play("hurt_power")
 	#else:

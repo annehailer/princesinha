@@ -68,6 +68,7 @@ func go_to_attack_state():
 func go_to_dead_state():
 	status = SkeletonState.dead
 	sprite.play("dead")
+	Globals.score += 1000
 	#body_hitbox.process_mode = Node.PROCESS_MODE_DISABLED
 	#head_hitbox.process_mode = Node.PROCESS_MODE_DISABLED
 	#body_hitbox.monitoring = false

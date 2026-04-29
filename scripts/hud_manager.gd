@@ -12,3 +12,4 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	coins_counter.text = str("%04d" % Globals.coins)
+	score_counter.text = str("%06d" % Globals.score)
