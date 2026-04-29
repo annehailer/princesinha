@@ -10,6 +10,14 @@
 [ext_resource type="Texture2D" uid="uid://cmg6lq67s8we2" path="res://sprites/Seasonal Tilesets/3 - Tropics/Background parts/1 - Waters_version_1.png" id="7_t8vtq"]
 [ext_resource type="PackedScene" uid="uid://cdanm25wysld2" path="res://entities/camera.tscn" id="9_34ia6"]
 [ext_resource type="PackedScene" uid="uid://cd4menxx8bdk5" path="res://entities/level_end.tscn" id="10_d18o5"]
+[ext_resource type="PackedScene" uid="uid://bmdvb871bk6uq" path="res://entities/broken_block.tscn" id="11_ei81g"]
+[ext_resource type="PackedScene" uid="uid://b1gulxwghg0j4" path="res://entities/coin.tscn" id="12_ytc0w"]
+[ext_resource type="Script" uid="uid://c5eiswqfugkyi" path="res://scripts/hud_manager.gd" id="13_3eg8f"]
+[ext_resource type="Texture2D" uid="uid://de5qxeov2ev64" path="res://_sprites/Mini FX, Items & UI/Common Pick-ups/coins frame/coin (1).png" id="13_mjtd1"]
+[ext_resource type="Texture2D" uid="uid://cerg0qmahxemv" path="res://_sprites/Mini FX, Items & UI/Common Pick-ups/coins frame/coin (2).png" id="14_kjkl5"]
+[ext_resource type="Texture2D" uid="uid://bbcdou4ljfj0q" path="res://_sprites/Mini FX, Items & UI/Common Pick-ups/coins frame/coin (3).png" id="15_3eg8f"]
+[ext_resource type="Texture2D" uid="uid://by7bjx7fohss5" path="res://_sprites/Mini FX, Items & UI/Common Pick-ups/coins frame/coin (4).png" id="16_cjwtm"]
+[ext_resource type="FontFile" uid="uid://dofptm1gu5fyn" path="res://fonts/Quaver v1.0/quaver.ttf" id="17_kjkl5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7xb8y"]
 atlas = ExtResource("7_t8vtq")
@@ -34,13 +42,24 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_34ia6"]
-size = Vector2(20, 210.25)
+size = Vector2(20, 539.125)
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_b78wb"]
+frames = 4
+speed_scale = 4.0
+frame_0/texture = ExtResource("13_mjtd1")
+frame_1/texture = ExtResource("14_kjkl5")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("15_3eg8f")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("16_cjwtm")
+frame_3/duration = 1.0
 
 [node name="Tropic" type="Node2D" unique_id=1498055783]
 metadata/_edit_vertical_guides_ = [1095.0]
 
 [node name="player" parent="." unique_id=625220098 instance=ExtResource("1_bmxgx")]
-position = Vector2(39, 161)
+position = Vector2(44, 161)
 
 [node name="Parallax Beach" type="ParallaxBackground" parent="." unique_id=1291423986]
 
@@ -87,37 +106,170 @@ position = Vector2(576, 91)
 sprite_frames = SubResource("SpriteFrames_d18o5")
 autoplay = "default"
 
-[node name="Camera" parent="." unique_id=1234135878 instance=ExtResource("9_34ia6")]
-position = Vector2(115, 114)
-limit_right = 1095
-
-[node name="StartLimit" type="StaticBody2D" parent="." unique_id=1272253450]
-position = Vector2(-10, 103)
-collision_mask = 6
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StartLimit" unique_id=1656877312]
-position = Vector2(0, 2)
-shape = SubResource("RectangleShape2D_34ia6")
-debug_color = Color(0.8616465, 0.35713625, 0.13769114, 0.41960785)
-
-[node name="EndLimit" type="StaticBody2D" parent="." unique_id=456018398]
-position = Vector2(1106, 68)
-collision_mask = 6
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EndLimit" unique_id=2076303661]
-position = Vector2(0, -6)
-shape = SubResource("RectangleShape2D_34ia6")
-debug_color = Color(0.819517, 0.40124735, 0.12118792, 0.41960785)
-
 [node name="TileMaps" type="Node2D" parent="." unique_id=1333550951]
 
 [node name="Terrain" type="TileMapLayer" parent="TileMaps" unique_id=1026271145]
-tile_map_data = PackedByteArray("AAABAAsAAgAJAAMAAAACAAsAAgAKAAMAAAADAAsAAgAKAAMAAAAEAAsAAgAKAAMAAAAFAAsAAgAKAAMAAAAGAAsAAgAKAAMAAAAHAAsAAgAKAAMAAAAIAAsAAgAKAAMAAAAJAAsAAgAKAAMAAAAKAAsAAgAKAAMAAAALAAsAAgAKAAMAAAAMAAsAAgAKAAMAAAANAAsAAgAKAAMAAAAOAAsAAgANAAMAAAAQAAoAAgAJAAMAAAARAAoAAgAKAAMAAAASAAoAAgAKAAMAAAATAAoAAgAKAAMAAAAUAAoAAgAKAAMAAAAVAAoAAgAKAAMAAAAWAAoAAgANAAMAAAAYAAkAAgAJAAMAAAAZAAkAAgAKAAMAAAAaAAkAAgAKAAMAAAAbAAkAAgAKAAMAAAAcAAkAAgAKAAMAAAAdAAkAAgAKAAMAAAAeAAkAAgANAAMAAAAiAAsAAgAJAAMAAAAjAAsAAgAKAAMAAAAkAAsAAgAKAAMAAAAlAAsAAgAKAAMAAAAmAAsAAgAKAAMAAAAnAAsAAgAKAAMAAAAoAAsAAgANAAMAAAAqAAgAAgAJAAMAAAArAAgAAgAKAAMAAAAsAAgAAgAKAAMAAAAtAAgAAgAKAAMAAAAuAAgAAgAKAAMAAAAvAAgAAgAKAAMAAAAwAAgAAgAKAAMAAAAxAAgAAgAKAAMAAAAyAAgAAgAKAAMAAAAzAAgAAgAKAAMAAAA0AAgAAgAKAAMAAAA1AAgAAgAKAAMAAAA2AAgAAgAKAAMAAAA3AAgAAgAKAAMAAAA4AAgAAgAKAAMAAAA5AAgAAgAKAAMAAAA6AAgAAgAKAAMAAAA7AAgAAgAKAAMAAAA8AAgAAgAKAAMAAAA9AAgAAgAKAAMAAAA+AAgAAgAKAAMAAAA/AAgAAgAKAAMAAABAAAgAAgAKAAMAAABBAAgAAgAKAAMAAABCAAgAAgAKAAMAAABDAAgAAgAKAAMAAABEAAgAAgANAAMAAAAiAAgAAgAPAAMAAAAjAAUAAgAJAAMAAAAkAAUAAgAKAAMAAAAnAAUAAgANAAMAAAAlAAUAAgAMAAMAAAAmAAUAAgAMAAMAAAAhAAIAAgAJAAMAAAAiAAIAAgAKAAMAAAAjAAIAAgAMAAMAAAAkAAIAAgAMAAMAAAAlAAIAAgANAAMAAAAlAP//AgAJAAMAAAAmAP//AgAKAAMAAAAnAP//AgAMAAMAAAAoAP//AgAMAAMAAAApAP//AgANAAMAAAAlAPz/AgAJAAMAAAAmAPz/AgAKAAMAAAAnAPz/AgAMAAMAAAAoAPz/AgAMAAMAAAApAPz/AgANAAMAAAAjAPj/AgAJAAMAAAAkAPj/AgAKAAMAAAAlAPj/AgAMAAMAAAAmAPj/AgAMAAMAAAAnAPj/AgANAAMAAAAaAPX/AgAJAAMAAAAbAPX/AgAKAAMAAAAcAPX/AgAKAAMAAAAdAPX/AgAKAAMAAAAeAPX/AgAKAAMAAAAfAPX/AgAKAAMAAAAgAPX/AgAKAAMAAAAhAPX/AgAKAAMAAAAiAPX/AgAKAAMAAAAjAPX/AgAKAAMAAAAkAPX/AgAKAAMAAAAlAPX/AgAKAAMAAAAmAPX/AgAKAAMAAAAnAPX/AgANAAMAAAA=")
+tile_map_data = PackedByteArray("AAABAAsAAgAJAAMAAAACAAsAAgAKAAMAAAADAAsAAgAKAAMAAAAEAAsAAgAKAAMAAAAFAAsAAgAKAAMAAAAGAAsAAgAKAAMAAAAHAAsAAgAKAAMAAAAIAAsAAgAKAAMAAAAJAAsAAgAKAAMAAAAKAAsAAgAKAAMAAAALAAsAAgAKAAMAAAAMAAsAAgAKAAMAAAANAAsAAgAKAAMAAAAOAAsAAgANAAMAAAAQAAoAAgAJAAMAAAARAAoAAgAKAAMAAAASAAoAAgAKAAMAAAATAAoAAgAKAAMAAAAUAAoAAgAKAAMAAAAVAAoAAgAKAAMAAAAWAAoAAgANAAMAAAAYAAkAAgAJAAMAAAAZAAkAAgAKAAMAAAAaAAkAAgAKAAMAAAAbAAkAAgAKAAMAAAAcAAkAAgAKAAMAAAAdAAkAAgAKAAMAAAAeAAkAAgANAAMAAAAiAAsAAgAJAAMAAAAjAAsAAgAKAAMAAAAkAAsAAgAKAAMAAAAlAAsAAgAKAAMAAAAmAAsAAgAKAAMAAAAnAAsAAgAKAAMAAAAoAAsAAgANAAMAAAAqAAgAAgAJAAMAAAArAAgAAgAKAAMAAAAsAAgAAgAKAAMAAAAtAAgAAgAKAAMAAAAuAAgAAgAKAAMAAAAvAAgAAgAKAAMAAAAwAAgAAgAKAAMAAAAxAAgAAgAKAAMAAAAyAAgAAgAKAAMAAAAzAAgAAgAKAAMAAAA0AAgAAgAKAAMAAAA1AAgAAgAKAAMAAAA2AAgAAgAKAAMAAAA3AAgAAgAKAAMAAAA4AAgAAgAKAAMAAAA5AAgAAgAKAAMAAAA6AAgAAgAKAAMAAAA7AAgAAgAKAAMAAAA8AAgAAgAKAAMAAAA9AAgAAgAKAAMAAAA+AAgAAgAKAAMAAAA/AAgAAgAKAAMAAABAAAgAAgAKAAMAAABBAAgAAgAKAAMAAABCAAgAAgAKAAMAAABDAAgAAgAKAAMAAABEAAgAAgANAAMAAAAiAAgAAgAPAAMAAAAjAAUAAgAJAAMAAAAkAAUAAgAKAAMAAAAnAAUAAgANAAMAAAAlAAUAAgAMAAMAAAAmAAUAAgAMAAMAAAAhAAIAAgAJAAMAAAAiAAIAAgAKAAMAAAAjAAIAAgAMAAMAAAAkAAIAAgAMAAMAAAAlAAIAAgANAAMAAAAvAPn/AgAJAAMAAAAwAPn/AgAKAAMAAAAxAPn/AgAMAAMAAAAyAPn/AgAMAAMAAAAzAPn/AgANAAMAAAA1APf/AgAJAAMAAAA2APf/AgAKAAMAAAA3APf/AgAKAAMAAAA4APf/AgAKAAMAAAA5APf/AgAKAAMAAAA6APf/AgAKAAMAAAA7APf/AgAKAAMAAAA8APf/AgAKAAMAAAA9APf/AgAKAAMAAAA+APf/AgAKAAMAAAA/APf/AgAKAAMAAABAAPf/AgAKAAMAAABBAPf/AgAKAAMAAABCAPf/AgAKAAMAAABDAPf/AgAKAAMAAABEAPf/AgAKAAMAAABFAPf/AgANAAMAAAA=")
 tile_set = ExtResource("2_ry6l7")
 
 [node name="Decoration" type="TileMapLayer" parent="TileMaps" unique_id=344032667]
 tile_map_data = PackedByteArray("AAAAAAwAAwAMAAYAAAABAAwAAwAMAAYAAAACAAwAAwAMAAYAAAADAAwAAwAMAAYAAAAEAAwAAwAMAAYAAAAFAAwAAwAMAAYAAAAGAAwAAwAMAAYAAAAHAAwAAwAMAAYAAAAIAAwAAwAMAAYAAAAJAAsAAwAMAAUAAAAJAAwAAwAMAAYAAAAKAAsAAwAMAAUAAAAKAAwAAwAMAAYAAAALAAsAAwAMAAUAAAALAAwAAwAMAAYAAAAMAAsAAwAMAAUAAAAMAAwAAwAMAAYAAAANAAsAAwAMAAUAAAANAAwAAwAMAAYAAAAOAAsAAwAMAAUAAAAOAAwAAwAMAAYAAAAPAAsAAwAMAAUAAAAPAAwAAwAMAAYAAAAQAAsAAwAMAAUAAAAQAAwAAwAMAAYAAAARAAsAAwAMAAUAAAARAAwAAwAMAAYAAAASAAsAAwAMAAUAAAASAAwAAwAMAAYAAAATAAsAAwAMAAUAAAATAAwAAwAMAAYAAAAUAAsAAwAMAAUAAAAUAAwAAwAMAAYAAAAVAAsAAwAMAAUAAAAVAAwAAwAMAAYAAAAWAAsAAwAMAAUAAAAWAAwAAwAMAAYAAAAXAAsAAwAMAAUAAAAXAAwAAwAMAAYAAAAYAAsAAwAMAAUAAAAYAAwAAwAMAAYAAAAZAAsAAwAMAAUAAAAZAAwAAwAMAAYAAAAaAAsAAwAMAAUAAAAaAAwAAwAMAAYAAAAbAAsAAwAMAAUAAAAbAAwAAwAMAAYAAAAcAAsAAwAMAAUAAAAcAAwAAwAMAAYAAAAdAAsAAwAMAAUAAAAdAAwAAwAMAAYAAAAeAAsAAwAMAAUAAAAeAAwAAwAMAAYAAAAfAAsAAwAMAAUAAAAfAAwAAwAMAAYAAAAgAAsAAwAMAAUAAAAgAAwAAwAMAAYAAAAhAAsAAwAMAAUAAAAhAAwAAwAMAAYAAAAiAAsAAwAMAAUAAAAiAAwAAwAMAAYAAAAjAAsAAwAMAAUAAAAjAAwAAwAMAAYAAAAAAAsAAwAMAAUAAAABAAsAAwAMAAUAAAACAAsAAwAMAAUAAAADAAsAAwAMAAUAAAAEAAsAAwAMAAUAAAAFAAsAAwAMAAUAAAAGAAsAAwAMAAUAAAAHAAsAAwAMAAUAAAAIAAsAAwAMAAUAAAAJAAkAAwABAAEAAAALAAoAAwAJAAMAAAAaAAgAAwAJAAMAAAAkAAsAAwAMAAUAAAAkAAwAAwAMAAYAAAAlAAsAAwAMAAUAAAAlAAwAAwAMAAYAAAAmAAsAAwAMAAUAAAAmAAwAAwAMAAYAAAAnAAsAAwAMAAUAAAAnAAwAAwAMAAYAAAAoAAsAAwAMAAUAAAAoAAwAAwAMAAYAAAApAAsAAwAMAAUAAAApAAwAAwAMAAYAAAAqAAsAAwAMAAUAAAAqAAwAAwAMAAYAAAArAAsAAwAMAAUAAAArAAwAAwAMAAYAAAAsAAsAAwAMAAUAAAAsAAwAAwAMAAYAAAAtAAsAAwAMAAUAAAAtAAwAAwAMAAYAAAAuAAsAAwAMAAUAAAAuAAwAAwAMAAYAAAAvAAsAAwAMAAUAAAAvAAwAAwAMAAYAAAAwAAsAAwAMAAUAAAAwAAwAAwAMAAYAAAAxAAsAAwAMAAUAAAAxAAwAAwAMAAYAAAAyAAsAAwAMAAUAAAAyAAwAAwAMAAYAAAAzAAsAAwAMAAUAAAAzAAwAAwAMAAYAAAA0AAsAAwAMAAUAAAA0AAwAAwAMAAYAAAA1AAsAAwAMAAUAAAA1AAwAAwAMAAYAAAA2AAsAAwAMAAUAAAA2AAwAAwAMAAYAAAA3AAsAAwAMAAUAAAA3AAwAAwAMAAYAAAA4AAsAAwAMAAUAAAA4AAwAAwAMAAYAAAA5AAsAAwAMAAUAAAA5AAwAAwAMAAYAAAA6AAsAAwAMAAUAAAA6AAwAAwAMAAYAAAA7AAsAAwAMAAUAAAA7AAwAAwAMAAYAAAA8AAsAAwAMAAUAAAA8AAwAAwAMAAYAAAA9AAsAAwAMAAUAAAA9AAwAAwAMAAYAAAA+AAsAAwAMAAUAAAA+AAwAAwAMAAYAAAA/AAsAAwAMAAUAAAA/AAwAAwAMAAYAAABAAAsAAwAMAAUAAABAAAwAAwAMAAYAAABBAAsAAwAMAAUAAABBAAwAAwAMAAYAAABCAAsAAwAMAAUAAABCAAwAAwAMAAYAAABDAAsAAwAMAAUAAABDAAwAAwAMAAYAAABEAAsAAwAMAAUAAABEAAwAAwAMAAYAAABFAAsAAwAMAAUAAABFAAwAAwAMAAYAAABGAAsAAwAMAAUAAABGAAwAAwAMAAYAAABHAAsAAwAMAAUAAABHAAwAAwAMAAYAAABIAAsAAwAMAAUAAABIAAwAAwAMAAYAAABJAAsAAwAMAAUAAABJAAwAAwAMAAYAAABKAAsAAwAMAAUAAABKAAwAAwAMAAYAAABLAAsAAwAMAAUAAABLAAwAAwAMAAYAAABMAAsAAwAMAAUAAABMAAwAAwAMAAYAAABNAAsAAwAMAAUAAABNAAwAAwAMAAYAAABOAAsAAwAMAAUAAABOAAwAAwAMAAYAAABPAAsAAwAMAAUAAABPAAwAAwAMAAYAAABQAAsAAwAMAAUAAABQAAwAAwAMAAYAAABRAAsAAwAMAAUAAABRAAwAAwAMAAYAAAA=")
 tile_set = ExtResource("3_7xb8y")
 
-[node name="LevelEnd" parent="." unique_id=1398727547 instance=ExtResource("10_d18o5")]
-position = Vector2(970, 141)
+[node name="Limits" type="Node2D" parent="." unique_id=1524735936]
+
+[node name="EndLimit" type="StaticBody2D" parent="Limits" unique_id=456018398]
+position = Vector2(1106, 68)
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/EndLimit" unique_id=2076303661]
+position = Vector2(0, -170.4375)
+shape = SubResource("RectangleShape2D_34ia6")
+debug_color = Color(0.819517, 0.40124735, 0.12118792, 0.41960785)
+
+[node name="StartLimit" type="StaticBody2D" parent="Limits" unique_id=1272253450]
+position = Vector2(-10, 103)
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/StartLimit" unique_id=1656877312]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_34ia6")
+debug_color = Color(0.8616465, 0.35713625, 0.13769114, 0.41960785)
+
+[node name="LevelEnd" parent="Limits" unique_id=1398727547 instance=ExtResource("10_d18o5")]
+position = Vector2(1086, -20)
+next_level = "fase_random"
+
+[node name="Camera" parent="." unique_id=1234135878 instance=ExtResource("9_34ia6")]
+position = Vector2(115, 114)
+limit_right = 1095
+
+[node name="Platforms" type="Node2D" parent="." unique_id=1168731872]
+
+[node name="BrokenBlocks" type="Node2D" parent="Platforms" unique_id=1002506061]
+
+[node name="BrokenBlock" parent="Platforms/BrokenBlocks" unique_id=93868364 instance=ExtResource("11_ei81g")]
+position = Vector2(627, 13)
+
+[node name="BrokenBlock2" parent="Platforms/BrokenBlocks" unique_id=1225161758 instance=ExtResource("11_ei81g")]
+position = Vector2(660, -18)
+
+[node name="BrokenBlock3" parent="Platforms/BrokenBlocks" unique_id=1044315047 instance=ExtResource("11_ei81g")]
+position = Vector2(690, -50)
+
+[node name="BrokenBlock4" parent="Platforms/BrokenBlocks" unique_id=1124045014 instance=ExtResource("11_ei81g")]
+position = Vector2(720, -84)
+
+[node name="MovingPlatforms" type="Node2D" parent="Platforms" unique_id=1862495630]
+
+[node name="Coins" type="Node2D" parent="." unique_id=1904965789]
+
+[node name="Coin" parent="Coins" unique_id=74787550 instance=ExtResource("12_ytc0w")]
+position = Vector2(272, 146)
+
+[node name="Coin2" parent="Coins" unique_id=776821693 instance=ExtResource("12_ytc0w")]
+position = Vector2(310, 146)
+
+[node name="Coin3" parent="Coins" unique_id=1757565437 instance=ExtResource("12_ytc0w")]
+position = Vector2(349, 146)
+
+[node name="Coin4" parent="Coins" unique_id=1237667897 instance=ExtResource("12_ytc0w")]
+position = Vector2(438, 88)
+
+[node name="Coin6" parent="Coins" unique_id=770254788 instance=ExtResource("12_ytc0w")]
+position = Vector2(569, 9)
+
+[node name="Coin5" parent="Coins" unique_id=1156555787 instance=ExtResource("12_ytc0w")]
+position = Vector2(720, 82)
+
+[node name="Coin7" parent="Coins" unique_id=148064127 instance=ExtResource("12_ytc0w")]
+position = Vector2(884, -169)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=847140477]
+
+[node name="Control" type="Control" parent="HUD" unique_id=1148015118]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("13_3eg8f")
+
+[node name="Container" type="MarginContainer" parent="HUD/Control" unique_id=1219737327]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="CoinsContainer" type="HBoxContainer" parent="HUD/Control/Container" unique_id=1523167410]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="CoinsIcon" type="TextureRect" parent="HUD/Control/Container/CoinsContainer" unique_id=1314553296]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = SubResource("AnimatedTexture_b78wb")
+
+[node name="CoinsCounter" type="Label" parent="HUD/Control/Container/CoinsContainer" unique_id=58679175]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("17_kjkl5")
+theme_override_font_sizes/font_size = 8
+text = "0000"
+vertical_alignment = 1
+
+[node name="TimerContainer" type="HBoxContainer" parent="HUD/Control/Container" unique_id=963745045]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="TimerLabel" type="Label" parent="HUD/Control/Container/TimerContainer" unique_id=792732685]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("17_kjkl5")
+theme_override_font_sizes/font_size = 5
+text = "TIME"
+vertical_alignment = 1
+
+[node name="TimerCounter" type="Label" parent="HUD/Control/Container/TimerContainer" unique_id=756033476]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("17_kjkl5")
+theme_override_font_sizes/font_size = 7
+text = "00:00"
+vertical_alignment = 1
+
+[node name="ScoreContainer" type="HBoxContainer" parent="HUD/Control/Container" unique_id=768520952]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="ScoreLabel" type="Label" parent="HUD/Control/Container/ScoreContainer" unique_id=1697037778]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("17_kjkl5")
+theme_override_font_sizes/font_size = 5
+text = "SCORE:"
+vertical_alignment = 1
+
+[node name="ScoreCounter" type="Label" parent="HUD/Control/Container/ScoreContainer" unique_id=2049131341]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("17_kjkl5")
+theme_override_font_sizes/font_size = 7
+text = "000000"
+vertical_alignment = 1

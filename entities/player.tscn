@@ -222,7 +222,7 @@ material = SubResource("ShaderMaterial_i623q")
 position = Vector2(0.39999962, -4.129446)
 scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_qly61")
-animation = &"jump"
+animation = &"idle"
 autoplay = "idle"
 speed_scale = 0.3
 
@@ -237,7 +237,7 @@ shape = SubResource("CapsuleShape2D_rfe5m")
 [node name="BodyArea" type="Area2D" parent="." unique_id=154391381 groups=["PlayerBody"]]
 visible = false
 collision_layer = 2
-collision_mask = 52
+collision_mask = 116
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BodyArea" unique_id=1668980295]
 z_index = 4000
@@ -253,7 +253,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FeetArea" unique_id=1191871829]
 z_index = 4000
-position = Vector2(0.28417015, 14.4929)
+position = Vector2(0.284, 13.573)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_6nm46")
 

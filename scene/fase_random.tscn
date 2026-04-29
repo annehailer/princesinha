@@ -1,0 +1,9 @@
+[gd_scene format=4 uid="uid://bee1oqhhjfi7w"]
+
+[ext_resource type="TileSet" uid="uid://b2at4vpjksc7v" path="res://tiles/Terrain.tres" id="1_5qh76"]
+
+[node name="fase random" type="Node2D" unique_id=538104901]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1059355429]
+tile_map_data = PackedByteArray("AAD+/wIAAAAEAAEAAAD//wIAAAAEAAEAAAAAAAIAAAAEAAEAAAABAAIAAAAEAAEAAAACAAIAAAAEAAEAAAADAAIAAAAEAAEAAAAEAAIAAAAEAAEAAAAFAAIAAAAEAAEAAAAGAAIAAAAEAAEAAAAHAAIAAAAEAAEAAAAIAAIAAAAEAAEAAAAJAAIAAAAEAAEAAAAKAAIAAAAEAAEAAAA=")
+tile_set = ExtResource("1_5qh76")

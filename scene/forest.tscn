@@ -9,10 +9,28 @@
 [ext_resource type="Texture2D" uid="uid://ck31fk1hbes14" path="res://sprites/Seasonal Tilesets/2 - Autumn Forest/Background parts/2 - Trees.png" id="7_gwku7"]
 [ext_resource type="Texture2D" uid="uid://c8x70oc0t1shx" path="res://sprites/Seasonal Tilesets/2 - Autumn Forest/Background parts/1 - Leaf_top.png" id="8_64es3"]
 [ext_resource type="PackedScene" uid="uid://cdanm25wysld2" path="res://entities/camera.tscn" id="9_jo4av"]
+[ext_resource type="PackedScene" uid="uid://dcap3sikvuwpk" path="res://entities/moving_platform.tscn" id="10_gwku7"]
 [ext_resource type="PackedScene" uid="uid://cd4menxx8bdk5" path="res://entities/level_end.tscn" id="10_jxvlp"]
+[ext_resource type="Script" uid="uid://c5eiswqfugkyi" path="res://scripts/hud_manager.gd" id="12_p7yhu"]
+[ext_resource type="Texture2D" uid="uid://de5qxeov2ev64" path="res://_sprites/Mini FX, Items & UI/Common Pick-ups/coins frame/coin (1).png" id="13_cwbpd"]
+[ext_resource type="Texture2D" uid="uid://cerg0qmahxemv" path="res://_sprites/Mini FX, Items & UI/Common Pick-ups/coins frame/coin (2).png" id="14_ysu3w"]
+[ext_resource type="Texture2D" uid="uid://bbcdou4ljfj0q" path="res://_sprites/Mini FX, Items & UI/Common Pick-ups/coins frame/coin (3).png" id="15_dki5c"]
+[ext_resource type="Texture2D" uid="uid://by7bjx7fohss5" path="res://_sprites/Mini FX, Items & UI/Common Pick-ups/coins frame/coin (4).png" id="16_cvgm6"]
+[ext_resource type="FontFile" uid="uid://dofptm1gu5fyn" path="res://fonts/Quaver v1.0/quaver.ttf" id="17_kuygm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jo4av"]
 size = Vector2(20, 210.25)
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_xw4on"]
+frames = 4
+speed_scale = 4.0
+frame_0/texture = ExtResource("13_cwbpd")
+frame_1/texture = ExtResource("14_ysu3w")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("15_dki5c")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("16_cvgm6")
+frame_3/duration = 1.0
 
 [node name="Forest" type="Node2D" unique_id=928315441]
 metadata/_edit_vertical_guides_ = [1325.0]
@@ -94,30 +112,140 @@ position = Vector2(79, 133)
 limit_top = 0
 limit_right = 1325
 
-[node name="StartLimit" type="StaticBody2D" parent="." unique_id=749227457]
+[node name="TileMaps" type="Node2D" parent="." unique_id=888991507]
+
+[node name="Terrain" type="TileMapLayer" parent="TileMaps" unique_id=22368881]
+tile_map_data = PackedByteArray("AAABAAwAAQAEAAEAAAADAAwAAQAEAAEAAAAAAAwAAQAEAAEAAAACAAwAAQAEAAEAAAAEAAwAAQAEAAEAAAAFAAwAAQAEAAEAAAAGAAwAAQAEAAEAAAAHAAwAAQAEAAEAAAAIAAwAAQADAAMAAAAJAAwAAQAEAAIAAAAKAAwAAQAFAAMAAAALAAwAAQAEAAEAAAAMAAwAAQAEAAEAAAANAAwAAQAEAAEAAAAOAAwAAQAEAAEAAAAPAAwAAQAEAAEAAAAQAAwAAQAEAAEAAAARAAwAAQAEAAEAAAASAAwAAQAEAAEAAAATAAwAAQAEAAEAAAAUAAwAAQAEAAEAAAAVAAwAAQAEAAEAAAAWAAwAAQADAAMAAAAXAAwAAQAEAAIAAAAYAAwAAQAFAAMAAAAZAAwAAQAEAAEAAAAaAAwAAQAEAAEAAAAbAAwAAQAEAAEAAAAcAAwAAQAEAAEAAAAdAAwAAQAEAAEAAAAeAAwAAQAEAAEAAAAfAAwAAQAEAAEAAAAgAAwAAQAEAAEAAAAhAAwAAQAEAAEAAAAiAAwAAQAEAAEAAAAjAAwAAQAEAAEAAAAkAAwAAQAEAAEAAAAlAAwAAQAEAAEAAAAmAAwAAQAEAAEAAAAnAAwAAQAEAAEAAAAoAAwAAQAEAAEAAAApAAwAAQAEAAEAAAAqAAwAAQAEAAEAAAArAAwAAQAEAAEAAAAsAAwAAQAEAAEAAAAtAAwAAQAEAAEAAAAuAAwAAQAEAAEAAAAvAAwAAQADAAMAAAAwAAwAAQAEAAIAAAAxAAwAAQAFAAMAAAAyAAwAAQAEAAEAAAAzAAwAAQAEAAEAAAA0AAwAAQAEAAEAAAA1AAwAAQAEAAEAAAA2AAwAAQAEAAEAAAA3AAwAAQAEAAEAAAA4AAwAAQAEAAEAAAA5AAwAAQAEAAEAAAA6AAwAAQAEAAEAAAA7AAwAAQAEAAEAAAA8AAwAAQAEAAEAAAA9AAwAAQAEAAEAAAA+AAwAAQAEAAEAAAA/AAwAAQADAAMAAABAAAwAAQAEAAIAAABBAAwAAQAFAAMAAABCAAwAAQAEAAEAAABDAAwAAQAEAAEAAABEAAwAAQAEAAEAAABFAAwAAQAEAAEAAABGAAwAAQAEAAEAAABHAAwAAQAEAAEAAABIAAwAAQAEAAEAAABJAAwAAQAEAAEAAABKAAwAAQAEAAEAAABLAAwAAQAEAAEAAABMAAwAAQAEAAEAAABNAAwAAQAEAAEAAABOAAwAAQAEAAEAAABPAAwAAQAEAAEAAABQAAwAAQAEAAEAAABRAAwAAQAEAAEAAABSAAwAAQAEAAEAAAAIAAsAAQADAAIAAAAJAAsAAQAEAAIAAAAKAAsAAQAFAAIAAAAWAAoAAQADAAEAAAAWAAsAAQADAAIAAAAXAAoAAQAEAAEAAAAXAAsAAQAEAAIAAAAYAAoAAQAFAAEAAAAYAAsAAQAFAAIAAAAvAAoAAQADAAEAAAAvAAsAAQADAAIAAAAwAAoAAQAEAAEAAAAwAAsAAQAEAAIAAAAxAAoAAQAFAAEAAAAxAAsAAQAFAAIAAAA/AAoAAQADAAEAAAA/AAsAAQADAAIAAABAAAoAAQAEAAEAAABAAAsAAQAEAAIAAABBAAoAAQAFAAEAAABBAAsAAQAFAAIAAAAIAAoAAQADAAIAAAAJAAoAAQAEAAIAAAAKAAoAAQAFAAIAAAAIAAkAAQADAAEAAAAJAAkAAQAEAAEAAAAKAAkAAQAFAAEAAAASAAYAAQAJAAMAAAATAAYAAQAKAAMAAAAUAAYAAQAKAAMAAAAVAAYAAQAKAAMAAAAWAAYAAQAKAAMAAAAXAAYAAQANAAMAAAAoAAMAAQAJAAMAAAApAAMAAQAKAAMAAAAqAAMAAQAKAAMAAAArAAMAAQAKAAMAAAAsAAMAAQAKAAMAAAAtAAMAAQAMAAMAAAAuAAMAAQANAAMAAAA=")
+tile_set = ExtResource("2_gbfvw")
+
+[node name="Limits" type="Node2D" parent="." unique_id=166266405]
+
+[node name="StartLimit" type="StaticBody2D" parent="Limits" unique_id=749227457]
 position = Vector2(-14, 114)
 collision_mask = 6
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StartLimit" unique_id=969528957]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/StartLimit" unique_id=969528957]
 position = Vector2(4, -9)
 shape = SubResource("RectangleShape2D_jo4av")
 debug_color = Color(0.8801642, 0.33440673, 0.14642599, 0.41960785)
 
-[node name="EndLimit" type="StaticBody2D" parent="." unique_id=1893187395]
+[node name="EndLimit" type="StaticBody2D" parent="Limits" unique_id=1893187395]
 position = Vector2(1339, 123)
 collision_mask = 6
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EndLimit" unique_id=1417585701]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/EndLimit" unique_id=1417585701]
 position = Vector2(-4, -17)
 shape = SubResource("RectangleShape2D_jo4av")
 debug_color = Color(0.8324629, 0.38432544, 0.20528457, 0.41960785)
 
-[node name="TileMaps" type="Node2D" parent="." unique_id=888991507]
-
-[node name="Terrain" type="TileMapLayer" parent="TileMaps" unique_id=22368881]
-tile_map_data = PackedByteArray("AAABAAwAAQAEAAEAAAADAAwAAQAEAAEAAAAAAAwAAQAEAAEAAAACAAwAAQAEAAEAAAAEAAwAAQAEAAEAAAAFAAwAAQAEAAEAAAAGAAwAAQAEAAEAAAAHAAwAAQAEAAEAAAAIAAwAAQADAAMAAAAJAAwAAQAEAAIAAAAKAAwAAQAFAAMAAAALAAwAAQAEAAEAAAAMAAwAAQAEAAEAAAANAAwAAQAEAAEAAAAOAAwAAQAEAAEAAAAPAAwAAQAEAAEAAAAQAAwAAQAEAAEAAAARAAwAAQAEAAEAAAASAAwAAQAEAAEAAAATAAwAAQAEAAEAAAAUAAwAAQAEAAEAAAAVAAwAAQAEAAEAAAAWAAwAAQADAAMAAAAXAAwAAQAEAAIAAAAYAAwAAQAFAAMAAAAZAAwAAQAEAAEAAAAaAAwAAQAEAAEAAAAbAAwAAQAEAAEAAAAcAAwAAQAEAAEAAAAdAAwAAQAEAAEAAAAeAAwAAQAEAAEAAAAfAAwAAQAEAAEAAAAgAAwAAQAEAAEAAAAhAAwAAQAEAAEAAAAiAAwAAQAEAAEAAAAjAAwAAQAEAAEAAAAkAAwAAQAEAAEAAAAlAAwAAQAEAAEAAAAmAAwAAQAEAAEAAAAnAAwAAQAEAAEAAAAoAAwAAQAEAAEAAAApAAwAAQAEAAEAAAAqAAwAAQAEAAEAAAArAAwAAQAEAAEAAAAsAAwAAQAEAAEAAAAtAAwAAQAEAAEAAAAuAAwAAQAEAAEAAAAvAAwAAQADAAMAAAAwAAwAAQAEAAIAAAAxAAwAAQAFAAMAAAAyAAwAAQAEAAEAAAAzAAwAAQAEAAEAAAA0AAwAAQAEAAEAAAA1AAwAAQAEAAEAAAA2AAwAAQAEAAEAAAA3AAwAAQAEAAEAAAA4AAwAAQAEAAEAAAA5AAwAAQAEAAEAAAA6AAwAAQAEAAEAAAA7AAwAAQAEAAEAAAA8AAwAAQAEAAEAAAA9AAwAAQAEAAEAAAA+AAwAAQAEAAEAAAA/AAwAAQADAAMAAABAAAwAAQAEAAIAAABBAAwAAQAFAAMAAABCAAwAAQAEAAEAAABDAAwAAQAEAAEAAABEAAwAAQAEAAEAAABFAAwAAQAEAAEAAABGAAwAAQAEAAEAAABHAAwAAQAEAAEAAABIAAwAAQAEAAEAAABJAAwAAQAEAAEAAABKAAwAAQAEAAEAAABLAAwAAQAEAAEAAABMAAwAAQAEAAEAAABNAAwAAQAEAAEAAABOAAwAAQAEAAEAAABPAAwAAQAEAAEAAABQAAwAAQAEAAEAAABRAAwAAQAEAAEAAABSAAwAAQAEAAEAAAAIAAsAAQADAAIAAAAJAAsAAQAEAAIAAAAKAAsAAQAFAAIAAAAWAAoAAQADAAEAAAAWAAsAAQADAAIAAAAXAAoAAQAEAAEAAAAXAAsAAQAEAAIAAAAYAAoAAQAFAAEAAAAYAAsAAQAFAAIAAAAvAAoAAQADAAEAAAAvAAsAAQADAAIAAAAwAAoAAQAEAAEAAAAwAAsAAQAEAAIAAAAxAAoAAQAFAAEAAAAxAAsAAQAFAAIAAAA/AAoAAQADAAEAAAA/AAsAAQADAAIAAABAAAoAAQAEAAEAAABAAAsAAQAEAAIAAABBAAoAAQAFAAEAAABBAAsAAQAFAAIAAAAIAAoAAQADAAIAAAAJAAoAAQAEAAIAAAAKAAoAAQAFAAIAAAAIAAkAAQADAAEAAAAJAAkAAQAEAAEAAAAKAAkAAQAFAAEAAAASAAYAAQAJAAMAAAATAAYAAQAKAAMAAAAUAAYAAQAKAAMAAAAVAAYAAQAKAAMAAAAWAAYAAQAKAAMAAAAXAAYAAQANAAMAAAA=")
-tile_set = ExtResource("2_gbfvw")
-
-[node name="LevelEnd" parent="." unique_id=1398727547 instance=ExtResource("10_jxvlp")]
-position = Vector2(1199, 207)
+[node name="LevelEnd" parent="Limits" unique_id=1398727547 instance=ExtResource("10_jxvlp")]
+position = Vector2(1314, 98)
 next_level = "tropic"
+
+[node name="Platforms" type="Node2D" parent="." unique_id=359183538]
+
+[node name="MovingPlatform" parent="Platforms" unique_id=1362673321 instance=ExtResource("10_gwku7")]
+position = Vector2(407, 99)
+ease = 2
+
+[node name="Target" parent="Platforms/MovingPlatform" index="1" unique_id=1663360060]
+position = Vector2(207, -44)
+
+[node name="MovingPlatform2" parent="Platforms" unique_id=1545766985 instance=ExtResource("10_gwku7")]
+position = Vector2(821, 162)
+ease = 2
+
+[node name="Target" parent="Platforms/MovingPlatform2" index="1" unique_id=1663360060]
+position = Vector2(0, -109)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=2008511210]
+
+[node name="Control" type="Control" parent="HUD" unique_id=1690800732]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_p7yhu")
+
+[node name="Container" type="MarginContainer" parent="HUD/Control" unique_id=1504213366]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="CoinsContainer" type="HBoxContainer" parent="HUD/Control/Container" unique_id=1250608176]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="CoinsIcon" type="TextureRect" parent="HUD/Control/Container/CoinsContainer" unique_id=1994020362]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = SubResource("AnimatedTexture_xw4on")
+
+[node name="CoinsCounter" type="Label" parent="HUD/Control/Container/CoinsContainer" unique_id=1028670596]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("17_kuygm")
+theme_override_font_sizes/font_size = 8
+text = "0000"
+vertical_alignment = 1
+
+[node name="TimerContainer" type="HBoxContainer" parent="HUD/Control/Container" unique_id=1441901699]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="TimerLabel" type="Label" parent="HUD/Control/Container/TimerContainer" unique_id=1777847450]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("17_kuygm")
+theme_override_font_sizes/font_size = 5
+text = "TIME"
+vertical_alignment = 1
+
+[node name="TimerCounter" type="Label" parent="HUD/Control/Container/TimerContainer" unique_id=1625367839]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("17_kuygm")
+theme_override_font_sizes/font_size = 7
+text = "00:00"
+vertical_alignment = 1
+
+[node name="ScoreContainer" type="HBoxContainer" parent="HUD/Control/Container" unique_id=2100674876]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="ScoreLabel" type="Label" parent="HUD/Control/Container/ScoreContainer" unique_id=1212610764]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("17_kuygm")
+theme_override_font_sizes/font_size = 5
+text = "SCORE:"
+vertical_alignment = 1
+
+[node name="ScoreCounter" type="Label" parent="HUD/Control/Container/ScoreContainer" unique_id=547853513]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("17_kuygm")
+theme_override_font_sizes/font_size = 7
+text = "000000"
+vertical_alignment = 1
+
+[editable path="Platforms/MovingPlatform"]
+[editable path="Platforms/MovingPlatform2"]

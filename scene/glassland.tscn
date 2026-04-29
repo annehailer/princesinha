@@ -13,9 +13,28 @@
 [ext_resource type="PackedScene" uid="uid://bcxcohawfiqgg" path="res://entities/skeleton.tscn" id="11_ggks1"]
 [ext_resource type="PackedScene" uid="uid://bdc2x7866e2nh" path="res://entities/pink_star.tscn" id="12_h6gnm"]
 [ext_resource type="PackedScene" uid="uid://caon7mylyry4v" path="res://entities/blue_star.tscn" id="13_u3uon"]
+[ext_resource type="PackedScene" uid="uid://dcap3sikvuwpk" path="res://entities/moving_platform.tscn" id="14_37gtq"]
+[ext_resource type="PackedScene" uid="uid://b1gulxwghg0j4" path="res://entities/coin.tscn" id="15_7jk31"]
+[ext_resource type="Script" uid="uid://c5eiswqfugkyi" path="res://scripts/hud_manager.gd" id="16_ydepb"]
+[ext_resource type="Texture2D" uid="uid://de5qxeov2ev64" path="res://_sprites/Mini FX, Items & UI/Common Pick-ups/coins frame/coin (1).png" id="17_bmm6u"]
+[ext_resource type="Texture2D" uid="uid://cerg0qmahxemv" path="res://_sprites/Mini FX, Items & UI/Common Pick-ups/coins frame/coin (2).png" id="18_y04h2"]
+[ext_resource type="Texture2D" uid="uid://bbcdou4ljfj0q" path="res://_sprites/Mini FX, Items & UI/Common Pick-ups/coins frame/coin (3).png" id="19_5nko1"]
+[ext_resource type="Texture2D" uid="uid://by7bjx7fohss5" path="res://_sprites/Mini FX, Items & UI/Common Pick-ups/coins frame/coin (4).png" id="20_me1k4"]
+[ext_resource type="FontFile" uid="uid://dofptm1gu5fyn" path="res://fonts/Quaver v1.0/quaver.ttf" id="21_v74cf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_17rxn"]
 size = Vector2(20, 210.25)
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_b78wb"]
+frames = 4
+speed_scale = 4.0
+frame_0/texture = ExtResource("17_bmm6u")
+frame_1/texture = ExtResource("18_y04h2")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("19_5nko1")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("20_me1k4")
+frame_3/duration = 1.0
 
 [node name="GrassLand" type="Node2D" unique_id=763009304]
 position = Vector2(0, -13)
@@ -80,87 +99,215 @@ position = Vector2(66, 190)
 limit_right = 2090
 limit_bottom = 230
 
-[node name="StartLimit" type="StaticBody2D" parent="." unique_id=1506720989]
+[node name="Enemies" type="Node2D" parent="." unique_id=1637570110]
+
+[node name="Skeleton" type="Node2D" parent="Enemies" unique_id=1656251034]
+
+[node name="skeleton" parent="Enemies/Skeleton" unique_id=370362738 instance=ExtResource("11_ggks1")]
+position = Vector2(362, 156.99998)
+rotation = -3.1415925
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton2" parent="Enemies/Skeleton" unique_id=1356189761 instance=ExtResource("11_ggks1")]
+position = Vector2(515, 156.99998)
+rotation = -3.1415925
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton4" parent="Enemies/Skeleton" unique_id=2119524961 instance=ExtResource("11_ggks1")]
+position = Vector2(480, 77.999985)
+rotation = -3.1415925
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton5" parent="Enemies/Skeleton" unique_id=1440548026 instance=ExtResource("11_ggks1")]
+position = Vector2(725, 46)
+rotation = -3.1415925
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton6" parent="Enemies/Skeleton" unique_id=701200864 instance=ExtResource("11_ggks1")]
+position = Vector2(892, 93)
+rotation = -3.1415925
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton7" parent="Enemies/Skeleton" unique_id=1792904121 instance=ExtResource("11_ggks1")]
+position = Vector2(1232, 61.999992)
+rotation = -3.1415925
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton8" parent="Enemies/Skeleton" unique_id=363698377 instance=ExtResource("11_ggks1")]
+position = Vector2(1952, 189)
+rotation = -3.1415925
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton9" parent="Enemies/Skeleton" unique_id=1012511743 instance=ExtResource("11_ggks1")]
+position = Vector2(58, 126)
+rotation = -3.1415925
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton10" parent="Enemies/Skeleton" unique_id=995017313 instance=ExtResource("11_ggks1")]
+position = Vector2(59, 61.999992)
+rotation = -3.1415925
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton11" parent="Enemies/Skeleton" unique_id=271070477 instance=ExtResource("11_ggks1")]
+position = Vector2(59, 6)
+rotation = -3.1415925
+scale = Vector2(1.1, -1.1)
+
+[node name="skeleton3" parent="Enemies/Skeleton" unique_id=1415676233 instance=ExtResource("11_ggks1")]
+position = Vector2(630.99994, 157.00002)
+rotation = -3.1415925
+scale = Vector2(1.1, -1.1)
+
+[node name="Limits" type="Node2D" parent="." unique_id=475095310]
+
+[node name="StartLimit" type="StaticBody2D" parent="Limits" unique_id=1506720989]
 position = Vector2(95, -6)
 collision_mask = 6
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StartLimit" unique_id=1825257775]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/StartLimit" unique_id=1825257775]
 position = Vector2(-105, 119)
 shape = SubResource("RectangleShape2D_17rxn")
 debug_color = Color(0.88800055, 0.32297146, 0.16633388, 0.41960785)
 
-[node name="EndLimit" type="StaticBody2D" parent="." unique_id=811372408]
+[node name="EndLimit" type="StaticBody2D" parent="Limits" unique_id=811372408]
 position = Vector2(-62, 3)
 collision_mask = 6
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EndLimit" unique_id=2008627422]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/EndLimit" unique_id=2008627422]
 position = Vector2(2181, 140)
 shape = SubResource("RectangleShape2D_17rxn")
 debug_color = Color(0.88548213, 0.32215047, 0.2189183, 0.41960785)
 
-[node name="LevelEnd" parent="." unique_id=1398727547 instance=ExtResource("10_bt8wy")]
-position = Vector2(1983, 235)
+[node name="LevelEnd" parent="Limits" unique_id=1398727547 instance=ExtResource("10_bt8wy")]
+position = Vector2(2095, 95)
 next_level = "forest"
 
-[node name="Enemies" type="Node2D" parent="." unique_id=1637570110]
+[node name="Platforms" type="Node2D" parent="." unique_id=297313319]
 
-[node name="skeleton" parent="Enemies" unique_id=370362738 instance=ExtResource("11_ggks1")]
-position = Vector2(362, 156.99998)
-rotation = 3.1415927
-scale = Vector2(1.1, -1.1)
+[node name="MovingPlatform" parent="Platforms" unique_id=1362673321 instance=ExtResource("14_37gtq")]
+position = Vector2(111, 160)
 
-[node name="skeleton2" parent="Enemies" unique_id=1356189761 instance=ExtResource("11_ggks1")]
-position = Vector2(515, 156.99998)
-rotation = 3.1415927
-scale = Vector2(1.1, -1.1)
+[node name="Target" parent="Platforms/MovingPlatform" index="1" unique_id=1663360060]
+position = Vector2(0, -263)
 
-[node name="skeleton4" parent="Enemies" unique_id=2119524961 instance=ExtResource("11_ggks1")]
-position = Vector2(480, 77.999985)
-rotation = 3.1415927
-scale = Vector2(1.1, -1.1)
+[node name="Powers" type="Node2D" parent="." unique_id=1282011542]
 
-[node name="skeleton5" parent="Enemies" unique_id=1440548026 instance=ExtResource("11_ggks1")]
-position = Vector2(725, 46)
-rotation = 3.1415927
-scale = Vector2(1.1, -1.1)
+[node name="PinkStar" parent="Powers" unique_id=490122749 instance=ExtResource("12_h6gnm")]
+position = Vector2(198, 141)
 
-[node name="skeleton6" parent="Enemies" unique_id=701200864 instance=ExtResource("11_ggks1")]
-position = Vector2(892, 93)
-rotation = 3.1415927
-scale = Vector2(1.1, -1.1)
+[node name="BlueStar" parent="Powers" unique_id=1845681587 instance=ExtResource("13_u3uon")]
+position = Vector2(791, 80)
 
-[node name="skeleton7" parent="Enemies" unique_id=1792904121 instance=ExtResource("11_ggks1")]
-position = Vector2(1232, 61.999992)
-rotation = 3.1415927
-scale = Vector2(1.1, -1.1)
+[node name="Coins" type="Node2D" parent="." unique_id=1066937550]
 
-[node name="skeleton8" parent="Enemies" unique_id=363698377 instance=ExtResource("11_ggks1")]
-position = Vector2(1952, 189)
-rotation = 3.1415927
-scale = Vector2(1.1, -1.1)
+[node name="Coin" parent="Coins" unique_id=74787550 instance=ExtResource("15_7jk31")]
+position = Vector2(159.00002, 193)
 
-[node name="skeleton9" parent="Enemies" unique_id=1012511743 instance=ExtResource("11_ggks1")]
-position = Vector2(58, 126)
-rotation = 3.1415927
-scale = Vector2(1.1, -1.1)
+[node name="Coin2" parent="Coins" unique_id=1659982315 instance=ExtResource("15_7jk31")]
+position = Vector2(57, -62)
 
-[node name="skeleton10" parent="Enemies" unique_id=995017313 instance=ExtResource("11_ggks1")]
-position = Vector2(59, 61.999992)
-rotation = 3.1415927
-scale = Vector2(1.1, -1.1)
+[node name="Coin3" parent="Coins" unique_id=1427669648 instance=ExtResource("15_7jk31")]
+position = Vector2(57, -128)
 
-[node name="skeleton11" parent="Enemies" unique_id=271070477 instance=ExtResource("11_ggks1")]
-position = Vector2(59, 6)
-rotation = 3.1415927
-scale = Vector2(1.1, -1.1)
+[node name="Coin4" parent="Coins" unique_id=401756363 instance=ExtResource("15_7jk31")]
+position = Vector2(57, -154)
 
-[node name="skeleton3" parent="Enemies" unique_id=1415676233 instance=ExtResource("11_ggks1")]
-position = Vector2(630.99994, 157.00002)
-rotation = 3.1415927
-scale = Vector2(1.1, -1.1)
+[node name="Coin5" parent="Coins" unique_id=375792250 instance=ExtResource("15_7jk31")]
+position = Vector2(397, 79)
 
-[node name="PinkStar" parent="." unique_id=490122749 instance=ExtResource("12_h6gnm")]
-position = Vector2(0, 181)
+[node name="Coin6" parent="Coins" unique_id=992424216 instance=ExtResource("15_7jk31")]
+position = Vector2(575, 51)
 
-[node name="BlueStar" parent="." unique_id=1845681587 instance=ExtResource("13_u3uon")]
-position = Vector2(238, 197)
+[node name="Coin7" parent="Coins" unique_id=1463391687 instance=ExtResource("15_7jk31")]
+position = Vector2(634, 27.000004)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1847196932]
+
+[node name="Control" type="Control" parent="HUD" unique_id=156227730]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("16_ydepb")
+
+[node name="Container" type="MarginContainer" parent="HUD/Control" unique_id=822811334]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="CoinsContainer" type="HBoxContainer" parent="HUD/Control/Container" unique_id=1866259902]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="CoinsIcon" type="TextureRect" parent="HUD/Control/Container/CoinsContainer" unique_id=850144629]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = SubResource("AnimatedTexture_b78wb")
+
+[node name="CoinsCounter" type="Label" parent="HUD/Control/Container/CoinsContainer" unique_id=380520815]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("21_v74cf")
+theme_override_font_sizes/font_size = 8
+text = "0000"
+vertical_alignment = 1
+
+[node name="TimerContainer" type="HBoxContainer" parent="HUD/Control/Container" unique_id=1420032545]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="TimerLabel" type="Label" parent="HUD/Control/Container/TimerContainer" unique_id=1153762446]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("21_v74cf")
+theme_override_font_sizes/font_size = 5
+text = "TIME"
+vertical_alignment = 1
+
+[node name="TimerCounter" type="Label" parent="HUD/Control/Container/TimerContainer" unique_id=2108826675]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("21_v74cf")
+theme_override_font_sizes/font_size = 7
+text = "00:00"
+vertical_alignment = 1
+
+[node name="ScoreContainer" type="HBoxContainer" parent="HUD/Control/Container" unique_id=406063657]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="ScoreLabel" type="Label" parent="HUD/Control/Container/ScoreContainer" unique_id=679519433]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("21_v74cf")
+theme_override_font_sizes/font_size = 5
+text = "SCORE:"
+vertical_alignment = 1
+
+[node name="ScoreCounter" type="Label" parent="HUD/Control/Container/ScoreContainer" unique_id=360438618]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("21_v74cf")
+theme_override_font_sizes/font_size = 7
+text = "000000"
+vertical_alignment = 1
+
+[editable path="Platforms/MovingPlatform"]

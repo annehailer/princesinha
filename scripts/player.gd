@@ -203,18 +203,15 @@ func do_shooting():
 
 # --------------------------------------------------- DYING -------------------------------------------------
 
-func die():
-	global_position = spawn_pos
-
 
 func check_if_fall():
 	if global_position.y > 400:
-		die()
+		go_to_dead_state()
 
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("EnemyBullet"):
-		hit_enemy_bullet()
+		go_to_dead_state()
 	
 	if area.is_in_group("BlueStar"):
 		area.queue_free()
@@ -225,10 +222,6 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		area.queue_free()
 		give_shoot_power()
 
-
-
-func hit_enemy_bullet():
-	go_to_dead_state()
 
 # ------------------------------------------- RESPAWN -----------------------------------------------------
 

@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 ScreenShake="*uid://drirdcgrftq8v"
+Globals="*uid://q0cvxxdgef2u"
 
 [display]
 
@@ -85,6 +86,7 @@ shoot={
 2d_physics/layer_4="level_end"
 2d_physics/layer_5="letal"
 2d_physics/layer_6="power_up"
+2d_physics/layer_7="items"
 
 [physics]
 
