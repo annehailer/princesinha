@@ -34,6 +34,7 @@ var spawn_pos: Vector2
 
 var status: PlayerState
 
+
 # ------------------------------------------------- PHYSICS ------------------------------------------------ @
 
 func move(delta):
@@ -202,7 +203,7 @@ func do_shooting():
 	if sprite.flip_h: bullet_instance.global_position = spawn_bubble_gum_posLeft.global_position
 	else: bullet_instance.global_position = spawn_bubble_gum_posRight.global_position
 
-# --------------------------------------------------- DYING -------------------------------------------------
+# --------------------------------------------------- DYING ------------------------------------------
 
 
 func check_if_fall():
@@ -213,7 +214,8 @@ func check_if_fall():
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("EnemyBullet"):
 		go_to_dead_state()
-	
+
+
 	if area.is_in_group("BlueStar"):
 		area.queue_free()
 		print("pegou blue star")
@@ -223,8 +225,11 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		area.queue_free()
 		give_shoot_power()
 
+# -------------------------------------- HEARTS / HEALTH ----------------------------------------------
 
-# ------------------------------------------- RESPAWN -----------------------------------------------------
+pass
+
+# ------------------------------------------- RESPAWN -----------------------------------------------
 
 func _on_reload_timer_timeout() -> void:
 	get_tree().reload_current_scene()
