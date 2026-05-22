@@ -17,7 +17,6 @@
 [ext_resource type="Texture2D" uid="uid://cerg0qmahxemv" path="res://_sprites/Mini FX, Items & UI/Common Pick-ups/coins frame/coin (2).png" id="14_kjkl5"]
 [ext_resource type="Texture2D" uid="uid://bbcdou4ljfj0q" path="res://_sprites/Mini FX, Items & UI/Common Pick-ups/coins frame/coin (3).png" id="15_3eg8f"]
 [ext_resource type="Texture2D" uid="uid://by7bjx7fohss5" path="res://_sprites/Mini FX, Items & UI/Common Pick-ups/coins frame/coin (4).png" id="16_cjwtm"]
-[ext_resource type="FontFile" uid="uid://dofptm1gu5fyn" path="res://fonts/Quaver v1.0/quaver.ttf" id="17_kjkl5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7xb8y"]
 atlas = ExtResource("7_t8vtq")
@@ -138,7 +137,6 @@ debug_color = Color(0.8616465, 0.35713625, 0.13769114, 0.41960785)
 
 [node name="LevelEnd" parent="Limits" unique_id=1398727547 instance=ExtResource("10_d18o5")]
 position = Vector2(1086, -20)
-next_level = "fase_random"
 
 [node name="Camera" parent="." unique_id=1234135878 instance=ExtResource("9_34ia6")]
 position = Vector2(115, 114)
@@ -223,7 +221,6 @@ texture = SubResource("AnimatedTexture_b78wb")
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("17_kjkl5")
 theme_override_font_sizes/font_size = 8
 text = "0000"
 vertical_alignment = 1
@@ -237,7 +234,6 @@ size_flags_vertical = 0
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("17_kjkl5")
 theme_override_font_sizes/font_size = 5
 text = "TIME"
 vertical_alignment = 1
@@ -246,7 +242,6 @@ vertical_alignment = 1
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("17_kjkl5")
 theme_override_font_sizes/font_size = 7
 text = "00:00"
 vertical_alignment = 1
@@ -260,7 +255,6 @@ size_flags_vertical = 0
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("17_kjkl5")
 theme_override_font_sizes/font_size = 5
 text = "SCORE:"
 vertical_alignment = 1
@@ -269,7 +263,6 @@ vertical_alignment = 1
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("17_kjkl5")
 theme_override_font_sizes/font_size = 7
 text = "000000"
 vertical_alignment = 1

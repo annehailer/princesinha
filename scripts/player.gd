@@ -5,7 +5,7 @@ enum PlayerState {
 	idle,
 	walk,
 	jump,
-	fall,
+	hurt,
 	dead
 }
 
@@ -73,7 +73,9 @@ func _physics_process(delta: float) -> void:
 		PlayerState.walk:
 			walk_state(delta)
 		PlayerState.jump:
-			jump_State(delta)
+			jump_state(delta)
+		PlayerState.hurt:
+			hurt_state(delta)
 		PlayerState.dead:
 			dead_state(delta)
 	move_and_slide()
@@ -105,15 +107,22 @@ func go_to_jump_state():
 
 
 func go_to_dead_state():
-	if status == PlayerState.dead: return
-	status = PlayerState.dead
-	Globals.score = 0
-	#if has_shoot_power:
-		#sprite.play("hurt_power")
-	#else:
-	sprite.play("dead")
-	velocity.x = 0
-	reload_timer.start()
+	if status == PlayerState.dead:
+		return
+
+	if has_shoot_power:
+		status = PlayerState.hurt
+		sprite.play("hurt_pink")
+		do_blink()
+
+		has_shoot_power = false
+		return
+	else:
+		status = PlayerState.dead
+		Globals.score = 0
+		sprite.play("dead")
+		velocity.x = 0
+		reload_timer.start()
 	do_blink()
 
 # ----------------------------------------------- STATES ------------------------------------------------
@@ -140,22 +149,31 @@ func walk_state(delta):
 		return
 	set_jump_redo(delta)
 
+func hurt_state(delta):
+	move(delta)
+
+	if is_on_floor():
+		if velocity.x == 0:
+			go_to_idle_state()
+		else:
+			go_to_walk_state()
+
 
 func dead_state(_delta):
 	pass
 
-func jump_State(delta):
+func jump_state(delta):
 	move(delta)
 
 # ---------------------------------------------- JUMPING -----------------------------------------------------
 
-# SEGURANDO O BOTÃO → sobe mais (COM POWER UP)
+	# SEGURANDO O BOTÃO: sobe mais (com power up)
 	if has_jump_power:
 		if Input.is_action_pressed("jump") and hold_time < MAX_HOLD_TIME and velocity.y < 0:
 			velocity.y -= HOLD_FORCE * delta
 			hold_time += delta
 	
-	# SOLTOU → corta o pulo
+	# SOLTOU: corta o pulo
 	if Input.is_action_just_released("jump") and velocity.y < 0:
 		velocity.y *= 0.5
 
@@ -280,14 +298,14 @@ var has_shoot_power := false
 
 func give_jump_power():
 	has_jump_power = true
-	print("Ganhou pulo forte")
+	print("ganhou pulo forte")
 
 func give_shoot_power():
 	has_shoot_power = true
-	print("Ganhou tiro")
+	print("ganhou tiro")
 
 func give_all_powers():
 	has_jump_power = true
 	has_shoot_power = true
-	print("Ganhou todos os poderes")
+	print("ganhou todos os poderes (+pulo e tiro)")
 	sprite.play("idle_power")

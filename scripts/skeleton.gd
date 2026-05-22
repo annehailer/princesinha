@@ -66,13 +66,16 @@ func go_to_attack_state():
 
 
 func go_to_dead_state():
+	if status == SkeletonState.dead:
+		return
+	
 	status = SkeletonState.dead
 	sprite.play("dead")
 	Globals.score += 1000
 	#body_hitbox.process_mode = Node.PROCESS_MODE_DISABLED
 	#head_hitbox.process_mode = Node.PROCESS_MODE_DISABLED
-	#body_hitbox.monitoring = false
-	#head_hitbox.monitoring = false
+	body_hitbox.monitoring = false
+	head_hitbox.monitoring = false
 	velocity = Vector2.ZERO
 
 # ----------------------------------------- STATES ------------------------------------------------
@@ -175,6 +178,8 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 func kill_player(player: Player) -> void:
 	await get_tree().create_timer(0.05).timeout
 	
+	
+	
 	if !is_instance_valid(player):
 		return
 	
@@ -189,6 +194,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if status == SkeletonState.dead: return
 	if area.is_in_group("PlayerBody"):
 		var player: Player = area.get_parent()
+		
 		kill_player(player)
 	# esqueleto morre se a bala encostar nele
 	if area.is_in_group("BubbleGum"):
