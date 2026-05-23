@@ -22,6 +22,6 @@ func _on_area_entered(area: Area2D) -> void:
 	sprite.play("collect")
 	# evita colisão dupla de moedas
 	await $CollisionShape2D.call_deferred("queue_free")
-	Globals.coins += coin_value
+	Globals.add_coins(coin_value)
 	Globals.score += 100
 	print (Globals.coins)

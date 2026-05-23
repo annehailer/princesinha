@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://duiq2a4fb5ntn"]
+
+[ext_resource type="Script" uid="uid://mph1x64v0fw5" path="res://scripts/checkpoint.gd" id="1_wpuaw"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gptjp"]
+
+[node name="Checkpoint" type="Area2D" unique_id=59676245]
+script = ExtResource("1_wpuaw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=768795880]
+shape = SubResource("WorldBoundaryShape2D_gptjp")
+debug_color = Color(0.5782487, 0, 0.15886861, 0.41960785)

@@ -186,7 +186,7 @@ func kill_player(player: Player) -> void:
 	if status == SkeletonState.dead:
 		return
 	
-	player.go_to_dead_state()
+	player.take_damage()
 
 
 func _on_hitbox_area_entered(area: Area2D) -> void:

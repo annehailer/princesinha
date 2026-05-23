@@ -9,6 +9,16 @@ enum PlayerState {
 	dead
 }
 
+enum PlayerSize {
+	NORMAL,
+	MINI
+}
+
+const MINI_SPEED_MULTIPLIER := 1.25
+const MINI_JUMP_MULTIPLIER := 1.18
+const INVINCIBILITY_TIME := 1.4
+
+
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 @onready var reload_timer: Timer = $ReloadTimer
@@ -34,6 +44,10 @@ var spawn_pos: Vector2
 
 var status: PlayerState
 
+var size_status := PlayerSize.NORMAL
+var is_invincible := false
+var invincibility_token := 0
+
 
 # ------------------------------------------------- PHYSICS ------------------------------------------------ @
 
@@ -55,6 +69,7 @@ func _ready() -> void:
 	#Engine.time_scale = 0.5
 	spawn_pos = global_position
 	go_to_idle_state()
+	store_normal_body_values()
 
 func _process(delta: float) -> void:
 	if bullet_timer > 0:
@@ -221,7 +236,123 @@ func do_shooting():
 	if sprite.flip_h: bullet_instance.global_position = spawn_bubble_gum_posLeft.global_position
 	else: bullet_instance.global_position = spawn_bubble_gum_posRight.global_position
 
-# --------------------------------------------------- DYING ------------------------------------------
+# -------------------------------------------- TAKE DAMAGE ----------------------------------------------
+
+func take_damage() -> void:
+	if status == PlayerState.dead or is_invincible:
+		return
+
+	if has_jump_power or has_shoot_power:
+		lose_powers()
+		go_to_hurt_state()
+		start_invincibility()
+		return
+
+	if size_status == PlayerSize.NORMAL:
+		go_to_mini_state()
+		go_to_hurt_state()
+		start_invincibility()
+		return
+
+	go_to_dead_state()
+
+func go_to_hurt_state() -> void:
+	status = PlayerState.hurt
+	sprite.play("hurt_pink" if has_shoot_power else "hurt")
+	velocity.x = 0
+	do_blink()
+
+
+func lose_powers() -> void:
+	has_jump_power = false
+	has_shoot_power = false
+	go_to_normal_size()
+
+func go_to_normal_size() -> void:
+	size_status = PlayerSize.NORMAL
+	apply_body_size()
+
+
+func start_invincibility() -> void:
+	invincibility_token += 1
+	var current_token := invincibility_token
+	is_invincible = true
+
+	var elapsed := 0.0
+	while elapsed < INVINCIBILITY_TIME and current_token == invincibility_token:
+		sprite.modulate.a = 0.35
+		await get_tree().create_timer(0.08).timeout
+		sprite.modulate.a = 1.0
+		await get_tree().create_timer(0.08).timeout
+		elapsed += 0.16
+
+	if current_token == invincibility_token:
+		sprite.modulate.a = 1.0
+		is_invincible = false
+		
+		
+# -------------------------------------------- MINI PLAYER ------------------------------------------
+
+func go_to_mini_state() -> void:
+	size_status = PlayerSize.MINI
+	has_jump_power = false
+	has_shoot_power = false
+	apply_body_size()
+
+func lose_life_and_respawn() -> void:
+	is_invincible = false
+	invincibility_token += 1
+	sprite.modulate.a = 1.0
+	Globals.lose_life()
+
+	if Globals.lives <= 0:
+		Globals.score = 0
+		Globals.coins = 0
+		Globals.reset_lives()
+
+	reload_timer.start()
+
+@onready var ground_collision: CollisionShape2D = $ColGround
+@onready var body_collision: CollisionShape2D = $BodyArea/CollisionShape2D
+@onready var feet_collision: CollisionShape2D = $FeetArea/CollisionShape2D
+var normal_sprite_scale: Vector2
+var normal_sprite_position: Vector2
+var normal_ground_scale: Vector2
+var normal_body_scale: Vector2
+var normal_body_position: Vector2
+var normal_feet_scale: Vector2
+var normal_feet_position: Vector2
+
+func apply_body_size() -> void:
+	if size_status == PlayerSize.MINI:
+		sprite.scale = normal_sprite_scale * 0.68
+		sprite.position = normal_sprite_position + Vector2(0, 6.4)
+		ground_collision.scale = Vector2(normal_ground_scale.x * 0.7, normal_ground_scale.y)
+		body_collision.scale = Vector2(normal_body_scale.x * 0.65, normal_body_scale.y * 0.62)
+		body_collision.position = normal_body_position + Vector2(0, 5.0)
+		feet_collision.scale = Vector2(normal_feet_scale.x * 0.7, normal_feet_scale.y * 0.8)
+		feet_collision.position = normal_feet_position
+	else:
+		sprite.scale = normal_sprite_scale
+		sprite.position = normal_sprite_position
+		ground_collision.scale = normal_ground_scale
+		body_collision.scale = normal_body_scale
+		body_collision.position = normal_body_position
+		feet_collision.scale = normal_feet_scale
+		feet_collision.position = normal_feet_position
+
+
+func store_normal_body_values() -> void:
+	normal_sprite_scale = sprite.scale
+	normal_sprite_position = sprite.position
+	normal_ground_scale = ground_collision.scale
+	normal_body_scale = body_collision.scale
+	normal_body_position = body_collision.position
+	normal_feet_scale = feet_collision.scale
+	normal_feet_position = feet_collision.position
+	
+	
+# ---------------------------------------------- DYING ----------------------------------------------
 
 
 func check_if_fall():
